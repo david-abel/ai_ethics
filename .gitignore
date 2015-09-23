@@ -1,0 +1,7 @@
+*.sty
+*.aux
+*.log
+*.pdf
+*.gz
+AuthorKit/
+*.bib
