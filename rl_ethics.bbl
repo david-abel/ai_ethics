@@ -1,0 +1,25 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Briggs and Scheutz}{2015}]{briggs2015sorry}
+Briggs, G., and Scheutz, M.
+\newblock 2015.
+\newblock ``sorry, i can't do that'': Developing mechanisms to appropriately
+  reject directives in human-robot interactions.
+
+\bibitem[\protect\citeauthoryear{Scheutz \bgroup et al\mbox.\egroup
+  }{2007}]{scheutz2007first}
+Scheutz, M.; Schermerhorn, P.; Kramer, J.; and Anderson, D.
+\newblock 2007.
+\newblock First steps toward natural human-like hri.
+\newblock {\em Autonomous Robots} 22(4):411--423.
+
+\bibitem[\protect\citeauthoryear{Tellex \bgroup et al\mbox.\egroup
+  }{2011}]{tellex2011understanding}
+Tellex, S.; Kollar, T.; Dickerson, S.; Walter, M.~R.; Banerjee, A.~G.; Teller,
+  S.~J.; and Roy, N.
+\newblock 2011.
+\newblock Understanding natural language commands for robotic navigation and
+  mobile manipulation.
+\newblock In {\em AAAI}.
+
+\end{thebibliography}

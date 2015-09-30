@@ -1,0 +1,102 @@
+\documentclass[11pt]{amsart}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+\usepackage{aaai}
+\title{Reinforcement Learning as a Framework for Ethical Decision Making}
+\author{}
+\date{}                                           % Activate to display a given date or no date
+
+% --- Note Commands ---
+\usepackage{color}
+\newcommand\davenote[1]{\textcolor{blue}{Dave: #1}}
+
+\begin{document}
+\maketitle
+
+% --- ABSTRACT ---
+\begin{abstract}
+
+\end{abstract}
+
+% --- SECTION: Introduction ---
+\section{Introduction}
+
+% Overview/motivation
+Emerging AI systems will soon be making decisions that impact the lives of humans in a significant way; whether they are personal robots that are tasked with improving the daily life of a family or community, or they are workers in a factory setting, or are virtual assistants tasked with scheduling, and improving other cosmetic aspects of an individuals life. These systems will exist and carry out actions so as to improve the lives of the inhabitants of our planet. It is essential, then, that these agents take into account the desires, goals, and preferences of other agents in the world\footnote{Perhaps they should focus on optimizing the goals and preferences of their owners, and no one else}.
+
+This is critical to the decision making process of humans; our decisions do not directly benefit only our  own physical being, but often benefit those around us. We make sacrifices to improve the lives of others around us.
+
+% Why RL is baller for Ethical Decision Making/Outline of document.
+In this document, we propose launching an investigation into ethical decision making using reinforcement learning and related problems. The reinforcement learning framework achieves the appropriate generality needed to theorize about an idealized ethical artificial agent, as well as grounding specific questions that promote further scientific investigation. Furthermore, it has the benefit of relating the often hazy territory of ethical inquiry with a grounded analytic framework of computational complexity. As a result, we are able to pose questions about the theoretical realizability of certain types of learned behaviors, given the constraints imposed by computational complexity. In other words, we can gain insight into the way in which ethical learning must take place, in order to achieve the desired result, by confining our search for ethical learning algorithms to those that are computationally feasible. \davenote{What I had in mind here was asking about KWIK or sample complexity bounds for certain ethical ``primitives", and perhaps pitching the scaffolding paradigm.}
+
+% Superintelligence
+Additionally, research attention has been focused on the feasibility of the super intelligence, and other similar considerations. Within RL, we can specifically ground these considerations in theory, and investigate the feasibility of these sorts of emergent systems.
+
+% Posing further questions.
+Lastly, since we believe that Reinforcement Learning is the right sort of framework to investigate ethical learning and ethical decision making, we identify several critical challenges for future research in this area.
+
+
+% Paragraph on what this document *IS*
+What this document is: why we should be investigating the specifics of how an artificially intelligent agent should make ethical decisions in the reinforcement learning framework. What does it mean for a robot to be empathetic and take into consideration the needs of others? We are assuming that robotic and other types of AI systems will exist in some form or another to help humans out, and we want the decisions that these agents make to be in accordance with what we want them to do. This means coming up with a model 
+
+% Paragraph on what this document *IS NOT*
+What this document is not: is AI + warfare ethical? is technological unemployment ethical?
+
+
+
+% --- SECTION: Related Work ---
+\section{Related Work}
+
+\begin{itemize}
+%\item AIX: aritifical general intelligence. RL is basically as general as it gets. % Note: not convinced this belongs here? I guess what I had in mind was proposing an IDEALIZED ethical decision maker, and asking what that looks like, and arriving at the conclusion that RL or some form of RL is essential.
+\item Rule based systems ~\cite{briggs2015sorry}. 
+\item HRI in general~\cite{scheutz2007first,tellex2011understanding}
+\item Survey and warfare
+\end{itemize}
+
+
+% --- SECTION: Background ---
+\section{Background}
+
+We first introduce the standard Reinforcement Learning framework.
+
+% Subsection: Reinforcement Learning
+{\it Insert RL}
+
+% Subsection: Inverse Reinforcement Learning
+{\it Insert IRL}
+
+% Problem statement
+Inverse reinforcement learning is...
+
+% --- SECTION: RL for Ethical Decision Making ---
+\section{RL for Ethical Decision Making}
+
+\begin{itemize}
+\item Ethical Learning. \davenote{Scaffolding, bounds on learning behavior types}
+\item Empathy and conveying desires via IRL, interaction, HRI, transparency.
+\item Adaptability (knowledge transfer, the frame problem).
+\end{itemize}
+
+
+% --- SECTION: Open Problems ---
+\section{Open Problems}
+
+Subsections:
+\begin{itemize}
+\item Computational (e.g. solving or formalizing POMDPs in the right way, stochastic games, multi-agent decision making, etc.)
+\item How to turn desires, goals, or natural language into a reward function? e.g. James' work.
+\item Specifically grounding existing ethical frameworks in RL. Utilityrian is already represented, but how might we embed virtues?
+\item Transparency! How should an AI agent convey its goals, objectives, beliefs, etc. to a human companion?
+\end{itemize}
+
+
+% --- SECTION: Conclusion ---
+\section{Conclusion}
+
+
+% --- BIBLIOGRAPHY ---
+\bibliographystyle{aaai}
+\bibliography{rl_ethics}
+
+\end{document}
