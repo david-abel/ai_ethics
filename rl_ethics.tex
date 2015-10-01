@@ -13,16 +13,29 @@
 \begin{document}
 \maketitle
 
+% Contributions:
+% - Argument for RL as the right framework to investigate ethical learning and decision making
+	% > Specific examples + motivations
+		% a) Promoting ethical learning in addition to ethical decision making. (promotes adaptability and flexibility, avoids frame problem).
+		% b) Promote IRL for taking into account the needs/desires of others, in a theoretically justifiable way.
+		% c) Can relate the constraints of computational complexity to ethical behavior. Might be able to dig into arguments like the one Michael made in his Science article.
+		% d) Completely avoids getting lost in the clouds (which is often a problem with ethics); instead, grounds ethics in a tight analytic language that lets us talk about ``what do we want the robot to do" instead of ``what is *The Good*".
+% - Shortcomings of existing approaches
+% - Identify open challenges 
+	% > Computational (stochastic games, POMDPs)
+	% > Language/Goals/Desires to reward functions.
+	% > Transparency (how should an agent convey it's plan/beliefs to a human companion?)
+
 % --- ABSTRACT ---
 \begin{abstract}
 % AI systems will effect humans with their decisions.
 Emerging AI systems will soon be making decisions that impact the lives of humans in a significant way; It is essential, then, that these agents take into account the desires, goals, and preferences of other agents in the world while acting.
 % We argue that RL should be used to inspect ethical learning & decision making.
-In this work, we argue that Reinforcement Learning achieves the appropriate generality needed to theorize about an idealized ethical artificial agent, and offers the proper framework for grounding specific questions about ethical decision making that can promote further scientific investigation.
+In this work, we argue that Reinforcement Learning achieves the appropriate generality needed to theorize about an idealized ethical artificial agent, and offers the proper framework for grounding specific questions about ethical learning and decision making that can promote further scientific investigation.
 % Summary of why we argue this.
-Furthermore, RL can relate the often hazy territory of ethical inquiry within the grounded analytic framework of computational complexity, opening the door for speculation about the theoretical realizability of certain types of learned behaviors, given the constraints imposed by computational complexity. Consequently, we can gain insight into the way in which ethical learning must take place by confining our search for ethical learning algorithms to those that are computationally feasible. 
+Furthermore, RL can relate the often hazy territory of ethical inquiry to the grounded analytic framework of computational complexity, opening the door for speculation about the theoretical realizability of certain types of learned behaviors, given the constraints imposed by computational complexity. Consequently, we can gain insight into the way in which ethical learning must take place by confining our search for ethical learning algorithms to those that are computationally feasible. 
 % Examples + critical challenges.
-We demonstrate how RL can ground ethical learning and decision making and identify critical challenges for future advancement in the area.
+We review the existing approaches to ethical decision making systems, and identify critical challenges for future advancement in the area.
 \end{abstract}
 
 % --- SECTION: Introduction ---
@@ -86,7 +99,7 @@ Inverse reinforcement learning is...
 \section{RL for Ethical Decision Making}
 
 \begin{itemize}
-\item Ethical Learning. \davenote{Scaffolding, bounds on learning behavior types}
+\item Ethical Learning. \davenote{Scaffolding, bounds on learning behavior types}. Sort of side skirting the issue of ``norms", and instead looking at, ``the agent should do what we want it to."
 \item Empathy and conveying desires via IRL, interaction, HRI, transparency.
 \item Adaptability (knowledge transfer, the frame problem).
 \item Realizability of ethical behaviors (using complexity to inform what things are feasible, what aren't, what behaviors are learnable, what aren't, etc.).
@@ -99,8 +112,7 @@ Inverse reinforcement learning is...
 Subsections:\davenote{Hope here is to pose very specific, well defined problems that other researchers could run with (hopefully folks might come away from reading this thinking ``Yeah! I want to solve that one!"}
 \begin{itemize}
 \item Computational (e.g. solving or formalizing POMDPs in the right way, stochastic games, multi-agent decision making, etc.)
-\item How to turn desires, goals, or natural language into a reward function? e.g. James' work.
-\item Specifically grounding existing ethical frameworks in RL. Utilityrian is already represented, but how might we embed virtues?
+\item How to turn desires, goals, or natural language into a reward function? e.g. James' RSS work.
 \item Transparency! How should an AI agent convey its goals, objectives, beliefs, etc. to a human companion?
 \end{itemize}
 
