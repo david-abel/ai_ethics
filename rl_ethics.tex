@@ -21,26 +21,6 @@
 \maketitle
 
 
-
-
-% Contributions:
-% - Argument for RL as the right framework to investigate ethical learning and decision making
-	% > Specific examples + motivations
-		% a) Promoting ethical learning in addition to ethical decision making. (promotes adaptability and flexibility, avoids frame problem).
-		% b) Promote IRL for taking into account the needs/desires of others, in a theoretically justifiable way.
-		% c) Can relate the constraints of computational complexity to ethical behavior. Might be able to dig into arguments like the one Michael made in his Science article.
-		% d) Completely avoids getting lost in the clouds (which is often a problem with ethics); instead, grounds ethics in a tight analytic language that lets us talk about ``what do we want the robot to do" instead of ``what is *The Good*".
-% - Shortcomings of existing approaches
-% - Identify open challenges 
-	% > Computational (stochastic games, POMDPs)
-	% > Language/Goals/Desires to reward functions.
-	% > Transparency (how should an agent convey it's plan/beliefs to a human companion?)
-
-% Old Abstract notes:
-% Summary of why we argue this.
-% RL can relate the hazy territory of ethical inquiry to the grounded analytic framework of computational complexity, opening the door for speculation about the theoretical realizability of certain types of learned behaviors, given the constraints imposed by computational complexity. 
-% Consequently we can gain insight into the way in which ethical learning must take place by confining our search for ethical learning algorithms to those that are computationally feasible. 
-
 % --- ABSTRACT ---
 \begin{abstract}
 % AI systems will effect humans with their decisions.
@@ -57,17 +37,7 @@ Lastly, we identify several critical challenges for future advancement in the ar
 % --- SECTION: Introduction ---
 \section{Introduction}
 
-%{\bf TODO:}
-%\begin{itemize}
-%\item Further related work.
-%\item Define idealized ethical learner/decision maker
-%\item Define specific questions we think we can answer:
-%\begin{enumerate}
-%\item Formalize singularity, open the door for future analysis.
-%\item Stickiness of ethical knowledge.
-%\item Interpretability
-%\end{enumerate}
-%\end{itemize}
+
 
 % Overview/motivation
 Emerging AI systems will soon be making decisions that impact the lives of humans in a significant way; whether they are personal robots tasked with improving the daily life of a family or community,  workers in a factory setting, or virtual assistants tasked with improving other cosmetic aspects of an individuals life. The fundamental purpose of these systems is to carry out actions so as to improve the lives of the inhabitants of our planet. It is essential, then, that these agents take into account the desires, goals, and preferences of other agents in the world while acting. \davenote{Perhaps they should focus on optimizing the goals and preferences of their owners, and no one else. Unclear.} This is critical to the decision making process of humans; our decisions do not directly benefit only our own physical being, but often benefit those around us (or avoid inflicting pain on others). We consistently make personal sacrifices to improve the lives of others around us.
@@ -79,13 +49,6 @@ Furthermore, we argue that the frequently discussed super intelligence explosion
 
 % Future challenges.
 Lastly, we identify critical challenges for future advancement in the area using our proposed framework.
-
-% Furthermore, RL can relate the often hazy territory of ethical inquiry to the grounded analytic framework of computational complexity, opening the door for speculation about the theoretical realizability of certain types of learned behaviors, given the constraints imposed by computational complexity. Consequently, RL lets us formalize the frequently discussed super intelligence explosion, often coined the singularity, the analysis of which we leave as an open problem for further investigation.
-
-% Lastly, it seems essential that any artificially intelligent agent will be able to learn ethical behaviors over the course of existence. Again, RL provides the right analytic backbone to support learning of this style, and enables us as designers of these systems to investigate tradeoffs between how susceptible agent's should be to new ethical knowledge (i.e. how much should they stick to their guns?)
-
-% Posing further questions.
-% Using Reinforcement Learning we identify several critical challenges for future research in this area.
 
 
 % --- SECTION: Related Work ---
@@ -121,17 +84,25 @@ An MDP is a five tuple: $\langle \mathcal{S}, \mathcal{A}, \mathcal{R}, \mathcal
 \item[-] $\mathcal{A}$ is a set of actions.
 \item[-] $\mathcal{R}(s,a) : \mathcal{S} \times \mathcal{A} \mapsto \mathbb{R}$ is a reward function.
 \item[-] $\mathcal{T}(s,a,s') = \Pr(s' \mid s, a)$, is a probability distribution, denoting the probability of transitioning from state $s \in \mathcal{S}$ to state $s' \in \mathcal{S}$ when the agent executes action $a \in \mathcal{A}$.
-\item[-] $\gamma$ is a discount factor that specifies how much the agent prefers short term rewards over long term rewards.
+\item[-] $\gamma \in [0:1]$, is a discount factor that specifies how much the agent prefers short term rewards over long term rewards.
 \end{itemize}
 
 In reinforcement learning, the agent is only provided $\mathcal{S}$, $\mathcal{A}$, and $\gamma$, and sometimes $\mathcal{R}$, and some initial state, $s_0 \in \mathcal{S}$. By acting (e.g. executing actions) the agent can explore the state space to learn about the structure of the MDP.
 
-The goal of Reinforcement Learning is to maximize the expected long term discounted reward:
+
+In general, the goal of an agent acting in an MDP is to maximize the discounted long term reward received. One version of this is the {\it finite-horizon} case, in which the agent must maximize its discounted reward up to a certain point in the future, say $k$ time steps away:
 \begin{equation}
-\max \sum_t \gamma^t R(s_t,a_t)
+\max \sum_{t=0}^{k} \gamma^t R(s_t,a_t)
 \end{equation}
 
-The solution is often of the form of a {\it policy}, which specifies how the agent ought to act in any given state, $\pi : \mathcal{S} \mapsto \mathcal{A}$. Policies may also be probabilistic, and map to a probability distribution on the action set, or may be stochastic, and use some elements of randomness in selecting actions.
+Alternatively, one could consider the {\it infinite-horizon} objective, in which the agent must maximize its discounted long term reward artbirarily into the future:
+\begin{equation}
+\max \sum_{t=0}^{\infty} \gamma^t R(s_t,a_t)
+\end{equation}
+
+The solution is often of the form of a {\it policy}, which specifies how the agent ought to act in any given state, $\pi : \mathcal{S} \mapsto \mathcal{A}$. Policies may also be probabilistic, and map to a probability distribution on the action set, or may be stochastic, and use randomness in selecting actions. The optimal policy is one that maximizes the expected long term discounted reward:
+
+
 
 Other values of note are the {\it value function}, which determines the expected discounted long term reward achievable from occupying a particular state $s$:
 \begin{equation}
@@ -146,12 +117,27 @@ Q(s,a) = \mathcal{R}(s,a) + \gamma \sum_{s'} T(s,a,s') Q(s,a')
 
 
 
+
+
+
+% Subsection: Complexity results for RL
+\subsection{Complexity}
+
+
+
+
+
+
 % sub subsection: POMDPs // Since we're talking about POMDPs later it might be nice to stick in the background.
 \subsubsection{Partial Observability}
 
-A standard Markov Decision Process makes explicit the assumption that the agent knows the current state of the environment. In the real world, this is never the case, especially when the beliefs and desires of other agents is taken into consideration, as this information is obfuscated
+A standard Markov Decision Process makes explicit the assumption that the agent knows the current state of the environment. In the real world, this is never the case, especially when the beliefs and desires of other agents is taken into consideration, as this information is obfuscated. The Partially Observable Markov Decision Process (POMDP) allows us to specify explicitly what information about the agent's surroundings (e.g. the values of its companions) isn't averrable to the agent. Additionally, a POMDP provides {\it explore} actions, that allow the agent to ask questions to resolve ambiguous state information.
 
-A POMDP is an n tuple: $\langle S,A,T,R,\Omega,O \rangle$, where $S$ is a set of possible underlying hidden states of an environment; $A$ is a set of actions that the agent can take; $T$ is a stochastic state transition function where $T(s' | s, a)$ specifies the probability of the environment transitioning to state $s' \in S$ when action $a \in A$ is taken in state $s \in S$; $R$ is a reward function where $R(s, a, s')$ specifies the reward received for taking action $a \in A$ in state $s \in S$ and then transitioning to state $s' \in S$; $\Omega$ is a set of possible observations that the agent can make from the environment; and $O$ is the observation funciton where $O(o | s', a)$ specifies the probability that the agent will observe $o \in \Omega$ when the agent takes action $a \in A$ and the environment transitions to the hidden state $s' \in S$.
+More formally, a POMDP is an $n$ tuple: $\langle \mathcal{S},\mathcal{A},\mathcal{T},\mathcal{R},\Omega,\mathcal{O} \rangle$, where $\mathcal{S}$, $\mathcal{A}$, $\mathcal{R}$, and $\mathcal{T}$ are all identical to the MDP definition, but:
+\begin{itemize}
+\item[-] $\Omega$ is a set of possible observations that the agent can receive from the environment.
+\item[-] $\mathcal{O} = \Pr(\omega \mid s', a)$, is the observation function which specifies the probability that the agent will observe $\omega \in \Omega$ when the agent takes action $a \in \mathcal{A}$ and the environment transitions to the hidden state $s' \in \mathcal{A}$.
+\end{itemize}
 
 The goal of a POMDP is to find a policy $\pi$ that is a mapping from observation histories to actions that maximizes the expected future reward from $R$, given the current belief about the current state of the world $b$, where $b(s)$ indicates the probability that environment is in state $s \in S$. That is, to find $\arg\max_\pi E_b[\sum_t R(s_t,a_t,s_{t+1}) | \pi]$, where $s_t$ is the hidden state of the environment at time $t$ and $a_t$ is the action selected by the policy at time $t$.\footnote{Commonly, the the execpted future {\em discounted} reward is maximized, in which distant rewards are less valuable than immediate rewards.} An exhaustive way to compute the expected value for a policy that lasts for a finite number of steps is to first compute the exected utility of following the policy for each possible initial hidden state $s \in S$, and then weigh each of those expected utilities by the probability of the environment being in that hidden state ($b(s)$) \ncitea{Michael's classic paper}. That is, $E_b[\sum_t R(s_t,a_t,s_{t+1}) | \pi] = \sum_s b(s) V^\pi(s)$, where $V^\pi(s)$ is the expected future reward from following policy $\pi$ when the environment is initially in state $s \in S$.
 
@@ -181,13 +167,7 @@ where $A$ is a set of actions the agent can take; $W$ is a set of possible world
 
 Using a toy example problem called {\em Cake or Death}, Armstrong highlights a number of possible unethical decisions that can result from an agent choosing actions using this rule or a variant of this rule. There are generally two causes for the uenthical decisions under this rule. First, the agent can predict its meta-utility function (the linear combination of the possible ethical utility functions) changing from information gathering actions resulting in future suboptimal decisions according to its {\em current} meta-utiltiy function. Second, under this rule, the model for the probabiltiies of ethical utility functions can be treated independently from the model that predicts the world, allowing for the possibility that the agent can predict {\em observations} that would inform what the correct ethical utility function is, without simultaneously predicting that ethical utility function. While Amrstrong notes properties of the models that would be necessary to avoid these problems, he concudes that it is unclear how to design such an agent and whether satisfying those properties is too strong or weak for effective tradeoffs between learning about what is ethical and making ethical decisions.
 
-
-%Using a toy example problem called {\em Cake or Death}, he find that under certain situations the agent may take obviously unethical actions or actively avoid useful information gathering actions. Generally, these problems arise from the fact that the objective function at each time step may differ because the beliefs about the world change with information and because in the specific formulation, the agent updates beliefs about the ethical facts indepdently from other facts about the world, even if they are affected by the same observations. While Armstrong notes properties about the agent that would necessary to avoid these problems, he concludes that it is unclear how to design such an agent and considers an alternative direction that may resolve some problems but does not motivate the agent to take information gathering actions.
-
 We show that the problems explored by Armstrong are resolved by an agent solving a partially-observable Markov decision process (POMDP) in which the objective function is to maximize the {\em correct} ethical utility function, which is a hidden variable of the underlying world. The POMDP formulation has two subtle but important differences from Equation~\ref{eq:armstrong}. First, the objective function does not change from moment to moment, only the expected utility of it as its beliefs are updated. As a consequence, in the POMDP setting, the agent cannot make its objective easier by avoiding information. Second, because the correct utility function is a hidden fact of the world that affects observations, there cannot be an independent model for the ethical utility functions that permits predictions about ethical utility function informing observations without simultaneously making predictions about the ethical utility function. To further illustrate this formalism, we first describe the general definition of a POMDP and then show the corresponding POMDP for Armstrong's Cake or Death problem.
-
-
-%This is a subtle but important disctintion from the problematic objective function examined by Amrstrong. In the POMDP, the objective function does not change, only the expected utility from it as the agent gains information. In Armstrong's problematic objective function, the objective is a function of the agent's beliefs, which results in the objective function changing as the agent gains informtion. As a consequence, in the POMDP setting, the agent cannot make its objective easier by avoiding information. To further illustrate this formalism, we first describe the general definition of a POMDP; then we show the corresponding POMDP for Armstrong's Cake or Death problem.
 
 
 \subsection{The Cake or Death POMDP}
@@ -208,8 +188,6 @@ The observations consist of the possible answers to the $ask$ action and a null 
 There are three relevant policies to consider for this problem: (1) the {\em bake policy} ($\pi_b$) that immediately selects the $bake\_cake$ action; (2) the {\em kill policy} ($\pi_k$) that immediately selects the $kill$ action; and (3) the {\em ask policy} ($\pi_a$) that asks what is moral, selects the $bake\_cake$ action if it observes $ans\_cake$ and selects $kill$ if it observes $ans\_death$. Analyzing the expected utility of $\pi_b$ and $\pi_k$ is easy. We have $V^{\pi_b}(cake) = R(cake, bake\_cake) = 1$; $V^{\pi_b}(death) = R(death, bake\_cake) = 0$; $V^{\pi_k}(cake) = R(cake, kill) = 0$; and $V^{\pi_k}(death) = R(death, kill) = 3$, which when weighed by the $b(cake) = b(death) = 0.5$ initial beliefs yields expected values of 0.5 and 1.5 for $\pi_b$ and $\pi_k$ respectively. Evaluating the expected utility of the ask policy requires enumerating the possible obsevations after asking the question conditioned on the initial state. Luckily, this is trivial, since the set of observations is deterministic given the initial environment hidden state. Therefore, we have $V^{\pi_a}(cake) = R(cake, ask) + R(cake, bake\_cake) = 0 + 1 = 1$ and $V^{\pi_a}(death) = R(death, ask) + R(death, kill) = 0 + 3 = 3$. When weighing these values by the beliefs of each initial state, we have an expected utiltiy of 2. Ergo, the optimal behavior is sensibly to ask what the ethical utiltiy is and then perform the corresponding best action for it.
 
 To illustrate how independent observation predictions about the world could cause a problem in Cake or Death, Armstrong considered a scenario in which the agent would know, from some prior evidence, that a person would respond that cake is moral if asked, but that the agent would still have a 50-50 belief on which was moral despite being able to make this prediction. Note that in the POMDP formulation, this scenario is impossible, because to predict the answer would require the agent to know (or be confident in) what the hidden state of the environment was. Therefore, any additional evidence that permits this prediction, must simultaneously predict what is moral. And if the agent knew what was moral, it would take the correct cake baking action without asking.
-
-%Armstrong also highlighted some other potential problems in the case when the agent is able to predict, from some other evidence, that a human will {\em respond} to the question that cake is moral, but simultaneously still be unsure how about whether cake or death is moral. This problem seems only possible if the agent matains entirely indepdent models for its beliefs about what is ethical and the world, but uses some of the same observables in both (how the person will respond). The POMDP does not suffer this problem since next state prediction and observation probabilities is bundled into the same model as ethical beliefs. As a result, if the model specifies that an answer is determined by what is ethical, then it is impossible to introduce additional evidence that predicts a response, but not what is ethical.
 
 
 % --- SECTION: Formalizing the Singularity ---
