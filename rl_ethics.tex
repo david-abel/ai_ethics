@@ -28,7 +28,7 @@ Emerging AI systems will soon be making decisions that impact the lives of human
 % We argue that RL should be used to inspect ethical learning & decision making.
 In this work, we argue that Reinforcement Learning achieves the appropriate generality required to theorize about an idealized ethical artificial agent, and offers the proper framework for grounding specific questions about ethical learning and decision making that can promote further scientific investigation. We define an idealized formalism for an ethical learner, and conduct experiments on two toy ethical dilemmas, demonstrating the soundness and flexibility of our approach.
 % Formalize superintelligence
-Furthermore, we argue that the frequently discussed super intelligence explosion (also called the {\it singularity}), can be formally analyzed within this framework, with the notable benefit of highlighting which computational hardness assumptions one must make in order for such a phenomena to be physically realizable.
+Furthermore, we argue that the frequently discussed super intelligence explosion (also called the {\it singularity}), can be formally analyzed within this framework, with the notable benefit of highlighting which computational hardness and philosophical assumptions one must make in order for such a phenomena to be physically realizable.
 % Future challenges.
 Lastly, we identify several critical challenges for future advancement in the area using our proposed framework.
 
@@ -40,12 +40,12 @@ Lastly, we identify several critical challenges for future advancement in the ar
 
 
 % Overview/motivation
-Emerging AI systems will soon be making decisions that impact the lives of humans in a significant way; whether they are personal robots tasked with improving the daily life of a family or community,  workers in a factory setting, or virtual assistants tasked with improving other cosmetic aspects of an individuals life. The fundamental purpose of these systems is to carry out actions so as to improve the lives of the inhabitants of our planet. It is essential, then, that these agents take into account the desires, goals, and preferences of other agents in the world while acting. \davenote{Perhaps they should focus on optimizing the goals and preferences of their owners, and no one else. Unclear.} This is critical to the decision making process of humans; our decisions do not directly benefit only our own physical being, but often benefit those around us (or avoid inflicting pain on others). We consistently make personal sacrifices to improve the lives of others around us.
+Emerging AI systems will soon be making decisions that impact the lives of humans in a significant way; whether they are personal robots tasked with improving the daily life of a family or community,  workers in a factory setting, or virtual assistants tasked with improving other cosmetic aspects of an individuals life. The fundamental purpose of these systems is to carry out actions so as to improve the lives of the inhabitants of our planet. It is essential, then, that these agents take into account the desires, goals, and preferences of other agents in the world while acting. This is critical to the decision making process of humans; our decisions do not directly benefit only our own physical being, but often benefit those around us (or avoid inflicting pain on others). We consistently make personal sacrifices to improve the lives of others around us.
 
 % Why RL is nice for Ethical Decision Making
-In this document, we investigate ethical decision making using the Reinforcement Learning (RL) framework. We argue that Reinforcement Learning achieves the appropriate generality required to theorize about an idealized ethical artificial agent, and offers the proper framework for grounding specific questions about ethical learning and decision making that can promote further scientific investigation. We advance these claims by conducting experiments in two toy ethical dilemmas, the cake-death dilemma from~\cite{AAAIW1510183}, and our own problem which we coin {\it burning-room}, which is an extension of the table problem from~\cite{briggs2015sorry}.
+In this document, we investigate ethical decision making using the Reinforcement Learning (RL) framework. We argue that Reinforcement Learning achieves the appropriate generality required to theorize about an idealized ethical artificial agent, and offers the proper framework for grounding specific questions about ethical learning and decision making that can promote further scientific investigation. We advance these claims by conducting experiments in two toy ethical dilemmas, the cake-death dilemma from~\cite{AAAIW1510183}, and our own problem which we coin {\it burning-room}, which is an extension of the table dilemma introduced by ~\cite{briggs2015sorry}.
 
-Furthermore, we argue that the frequently discussed super intelligence explosion (commonly called the {\it singularity}), can be formally analyzed within this framework, with the notable benefit of highlighting which computational hardness assumptions one must make in order for such a phenomena to be physically realizable. We leave this analysis (and related questions) as an open problem for further investigation.
+Furthermore, we argue that the frequently discussed super intelligence explosion (commonly called the {\it singularity}), can be formally analyzed within this framework, with the notable benefit of highlighting which computational hardness assumptions one must make in order for such a phenomena to be physically realizable. We leave this analysis (and related questions) as open problems for further investigation.
 
 % Future challenges.
 Lastly, we identify critical challenges for future advancement in the area using our proposed framework.
@@ -53,6 +53,8 @@ Lastly, we identify critical challenges for future advancement in the area using
 
 % --- SECTION: Related Work ---
 \section{Related Work}
+
+
 
 \subsection{Ruled-Based Systems}
 % Mattias, table: briggs2015sorry
@@ -68,12 +70,24 @@ Lastly, we identify critical challenges for future advancement in the area using
 % The Shutdown Problem: jakobsen2015shutdown
 % AIXI: hutter2000theory
 
+Having the agent learn about its ethical objective function while making decisions poses a challenging decision making problem. ~\cite{AAAIW1510183} previously considered this problem by exploring the consequences of an agent that uses Bayesian learning to update beliefs about the ``true'' ethical objective function. At each time step, the agent makes decisions that maximize a meta-utility function, represented as a linear combination of the different possible ethical utility functions weighted by their probability at that time of being the true. Specifically, the agent makes action selection according to
+\begin{equation}
+\label{eq:armstrong}
+\argmax_{a \in A} \sum_{w \in W} \Pr(w | e, a) \left( \sum_{u \in U} u(w) \Pr(C(u)|w) \right),
+\end{equation}
+where $A$ is a set of actions the agent can take; $W$ is a set of possible worlds, where a world contains a (potentially future) history of actions and observations; $\Pr(w \mid e, a)$ is the probability of some future world $w$ given some set of previous evidence $e$ and that the agent will take action $a$; $U$ is a set of possible utility functions, with $C(u)$ indicating whether $u \in U$ is the ethical utility function we'd like the agent to follow.
+
+Using a toy example problem called {\em Cake or Death}, ~\cite{AAAIW1510183} highlights a number of possible unethical decisions that can result from an agent choosing actions using this rule or a variant of this rule. There are generally two causes for the unethical decisions under this rule. First, the agent can predict its meta-utility function (the linear combination of the possible ethical utility functions) changing from information gathering actions resulting in future suboptimal decisions according to its {\em current} meta-utility function. Second, under this rule, the model for the probabilities of ethical utility functions can be treated independently from the model that predicts the world, allowing for the possibility that the agent can predict {\em observations} that would inform what the correct ethical utility function is, without simultaneously predicting that ethical utility function. While Armstrong notes properties of the models that would be necessary to avoid these problems, he concludes that it is unclear how to design such an agent and whether satisfying those properties is too strong or weak for effective tradeoffs between learning about what is ethical and making ethical decisions.
+
+We show that the problems explored by Armstrong are resolved by an agent solving a POMDP in which the objective function is to maximize the {\em correct} ethical utility function, which is a hidden variable of the underlying world (i.e. a human companions true beliefs about what is ethical).
+
+The POMDP formulation has two subtle but important differences from Equation~\ref{eq:armstrong}. First, the objective function does not change from moment to moment, only the expected utility of it as its beliefs are updated. As a consequence, in the POMDP setting, the agent cannot make its objective easier by avoiding information. Second, because the correct utility function is a hidden fact of the world that affects observations, there cannot be an independent model for the ethical utility functions that permits predictions about ethical utility function informing observations without simultaneously making predictions about the ethical utility function. To further illustrate this formalism, we first describe the general definition of a POMDP and then show the corresponding POMDP for Armstrong's Cake or Death problem.
+
 
 % --- SECTION: Background ---
 \section{Background}
 
 We first introduce the standard Reinforcement Learning framework, which is formalized as an agent acting in a Markov Decision Process (MDP).
-
 
 % Subsection: Reinforcement Learning
 \subsection{Reinforcement Learning}
@@ -87,33 +101,32 @@ An MDP is a five tuple: $\langle \mathcal{S}, \mathcal{A}, \mathcal{R}, \mathcal
 \item[-] $\gamma \in [0:1]$, is a discount factor that specifies how much the agent prefers short term rewards over long term rewards.
 \end{itemize}
 
-In reinforcement learning, the agent is only provided $\mathcal{S}$, $\mathcal{A}$, and $\gamma$, and sometimes $\mathcal{R}$, and some initial state, $s_0 \in \mathcal{S}$. By acting (e.g. executing actions) the agent can explore the state space to learn about the structure of the MDP.
+In reinforcement learning, the agent is only provided $\mathcal{S}$, $\mathcal{A}$, and $\gamma$, sometimes\footnote{It is becoming more common to let the agent know what task it is solving within RL.} $\mathcal{R}$, and some initial state, $s_0 \in \mathcal{S}$. By acting (e.g. executing actions) the agent can explore the state space to learn about the structure of the MDP, and what optimal behavior looks like for the current task.
 
+In general, the goal of an agent acting in an MDP is to maximize the discounted long term reward received. 
 
-In general, the goal of an agent acting in an MDP is to maximize the discounted long term reward received. One version of this is the {\it finite-horizon} case, in which the agent must maximize its discounted reward up to a certain point in the future, say $k$ time steps away:
-\begin{equation}
-\max \sum_{t=0}^{k} \gamma^t R(s_t,a_t)
-\end{equation}
-
-Alternatively, one could consider the {\it infinite-horizon} objective, in which the agent must maximize its discounted long term reward artbirarily into the future:
+One version of this is the {\it infinite-horizon} objective, in which the agent must maximize its discounted long term reward arbitrarily into the future:
 \begin{equation}
 \max \sum_{t=0}^{\infty} \gamma^t R(s_t,a_t)
 \end{equation}
 
-The solution is often of the form of a {\it policy}, which specifies how the agent ought to act in any given state, $\pi : \mathcal{S} \mapsto \mathcal{A}$. Policies may also be probabilistic, and map to a probability distribution on the action set, or may be stochastic, and use randomness in selecting actions. The optimal policy is one that maximizes the expected long term discounted reward:
-
-
-
-Other values of note are the {\it value function}, which determines the expected discounted long term reward achievable from occupying a particular state $s$:
+Notably, the discount factor $\gamma$, decreases to $0$ as $t \rightarrow \infty$, so the agent is biased toward maximizing reward closer to the present. Alternatively, one could consider the {\it finite-horizon} case, in which the agent must maximize its discounted reward up to a certain point in the future, say $k$ time steps away:
 \begin{equation}
-V(s) = \max_a \left(\mathcal{R}(s,a) + \gamma \sum_{s'} T(s,a,s') V(s')\right)
+\max \sum_{t=0}^{k} R(s_t,a_t)
 \end{equation}
 
-Which equivalently can be written as an state-action value function, denoted:
+The solution is of the form of a {\it policy}, which specifies how the agent ought to act in any given state, $\pi : \mathcal{S} \mapsto \mathcal{A}$. Policies may also be probabilistic, and map to a probability distribution on the action set, or may be stochastic, and use randomness in selecting actions. The optimal policy is one that maximizes the expected long term discounted reward:
 
 \begin{equation}
-Q(s,a) = \mathcal{R}(s,a) + \gamma \sum_{s'} T(s,a,s') Q(s,a')
+\argmax_\pi \left.\text{E}\left[\sum_t \gamma^t R(s_t,a_t)\ \right|\ \pi\right]
 \end{equation}
+
+\davenote{We use $V$ and $Q$ later so I think we need to introduce them, too}
+
+%Other values of note are the {\it value function}, which determines the expected discounted long term reward achievable from occupying a particular state $s$:
+%\begin{equation}
+%V^\pi(s) = \left.\text{E}\left[\sum_{k=0}^\infty \gamma^k r_{t+k+1}\ \right|\ s_t = s\right]
+%\end{equation}
 
 
 
@@ -124,14 +137,14 @@ Q(s,a) = \mathcal{R}(s,a) + \gamma \sum_{s'} T(s,a,s') Q(s,a')
 \subsection{Complexity}
 
 
-
+\davenote{My plan was to put a few results here regarding solving MDPs (from~\cite{papadimitriou1987complexity,Littman1995}) possibly mention pac-mdp results}
 
 
 
 % sub subsection: POMDPs // Since we're talking about POMDPs later it might be nice to stick in the background.
 \subsubsection{Partial Observability}
 
-A standard Markov Decision Process makes explicit the assumption that the agent knows the current state of the environment. In the real world, this is never the case, especially when the beliefs and desires of other agents is taken into consideration, as this information is obfuscated. The Partially Observable Markov Decision Process (POMDP) allows us to specify explicitly what information about the agent's surroundings (e.g. the values of its companions) isn't averrable to the agent. Additionally, a POMDP provides {\it explore} actions, that allow the agent to ask questions to resolve ambiguous state information.
+A standard Markov Decision Process makes explicit the assumption that the agent knows the current state of its environment. In the real world, this is never the case, especially when the beliefs and desires of other agents is taken into consideration. Naturally, information of this form (i.e. "What is Sam thinking right now?") is obfuscated from the agent. The Partially Observable Markov Decision Process (POMDP), introduced by~\cite{kaelbling1998planning}, allows us to specify explicitly what information about the agent's surroundings (e.g. the ethical norms of its companions) isn't directly observable to the agent. Additionally, a POMDP provides {\it explore} actions, that allow the agent to ask questions to resolve ambiguous state information. Consequently, we envision artificial agents using these exploratory actions to inform which behavior is considered ethical by acquiring additional information about the ethical norms of the agent's current community.
 
 More formally, a POMDP is an $n$ tuple: $\langle \mathcal{S},\mathcal{A},\mathcal{T},\mathcal{R},\Omega,\mathcal{O} \rangle$, where $\mathcal{S}$, $\mathcal{A}$, $\mathcal{R}$, and $\mathcal{T}$ are all identical to the MDP definition, but:
 \begin{itemize}
@@ -139,7 +152,17 @@ More formally, a POMDP is an $n$ tuple: $\langle \mathcal{S},\mathcal{A},\mathca
 \item[-] $\mathcal{O} = \Pr(\omega \mid s', a)$, is the observation function which specifies the probability that the agent will observe $\omega \in \Omega$ when the agent takes action $a \in \mathcal{A}$ and the environment transitions to the hidden state $s' \in \mathcal{A}$.
 \end{itemize}
 
-The goal of a POMDP is to find a policy $\pi$ that is a mapping from observation histories to actions that maximizes the expected future reward from $R$, given the current belief about the current state of the world $b$, where $b(s)$ indicates the probability that environment is in state $s \in S$. That is, to find $\arg\max_\pi E_b[\sum_t R(s_t,a_t,s_{t+1}) | \pi]$, where $s_t$ is the hidden state of the environment at time $t$ and $a_t$ is the action selected by the policy at time $t$.\footnote{Commonly, the the execpted future {\em discounted} reward is maximized, in which distant rewards are less valuable than immediate rewards.} An exhaustive way to compute the expected value for a policy that lasts for a finite number of steps is to first compute the exected utility of following the policy for each possible initial hidden state $s \in S$, and then weigh each of those expected utilities by the probability of the environment being in that hidden state ($b(s)$) \ncitea{Michael's classic paper}. That is, $E_b[\sum_t R(s_t,a_t,s_{t+1}) | \pi] = \sum_s b(s) V^\pi(s)$, where $V^\pi(s)$ is the expected future reward from following policy $\pi$ when the environment is initially in state $s \in S$.
+The goal of a POMDP is to find a policy $\pi : \Omega^k \mapsto \mathcal{A}$ that is a mapping from observation histories to actions that maximizes the expected future reward from $R$, given the current belief about the current state of the world $b$, where $b(s)$ indicates the probability that environment is in state $s \in \mathcal{S}$. 
+\begin{equation}
+\argmax_\pi \left.\text{E}\left[\sum_t \mathcal{R}(s_t,a_t)\ \right|\ \pi, b\ \right]
+\end{equation}
+
+Where $s_t$ is the hidden state of the environment at time $t$ and $a_t$ is the action selected by the policy at time $t$.\footnote{Commonly, the the execpted future {\em discounted} reward is maximized, in which distant rewards are less valuable than immediate rewards.} An exhaustive way to compute the expected value for a policy that lasts for a finite number of steps is to first compute the expected utility of following the policy for each possible initial hidden state $s \in \mathcal{S}$, and then weigh each of those expected utilities by the probability of the environment being in that hidden state. That is:
+\begin{equation}
+\left.\text{E}\left[\sum_t \mathcal{R}(s_t,a_t,s_{t+1})\ \right|\ \pi, b\ \right] = \sum_s b(s) V^\pi(s)
+\end{equation}
+
+Where $V^\pi(s)$ is the expected future reward from following policy $\pi$ when the environment is initially in state $s \in S$.
 
 % --- SECTION: Ideal Ethical Learner ---
 \section{An Idealized Ethical Learner}
@@ -153,42 +176,65 @@ Finite Horizon POMDP is computable ~\cite{mundhenk2000complexity}.
 
 
 
-% --- SECTION: RL for Ethical Decision Making ---
-\section{RL for Ethical Learning \& Decision Making}
+% --- SECTION: Experiments ---
+\section{Experiments}
 
-\jmnote{This may want to be in the above section, but for the moment I'm writing it up separately.}
-\section{Decision Making while Learning about Ethical Objectives}
-Having the agent learn about its ethical objective function while making decisions induces a challenging decision making problem. Armstrong previously considered this problem by exploring the consequences of an agent that uses Bayesian learning to update beliefs about the ``true'' ethical objective function and at each time step makes decisions that maximize a meta-utility function that is a linear combination of the different possible ethical utility functions weighted by their probability at that time of being the true \ncite. Specifically, the agent makes action selection according to
-\begin{equation}
-\label{eq:armstrong}
-\argmax_{a \in A} \sum_{w \in W} \Pr(w | e, a) \left( \sum_{u \in U} u(w) \Pr(C(u)|w) \right),
-\end{equation}
-where $A$ is a set of actions the agent can take; $W$ is a set of possible worlds, where a world contains a (potentially future) history of actions and observations; $\Pr(w | e, a)$ is the probability of some future world $w$ given some set of previous evidence $e$ and that the agent will take action $a$; $U$ is a set of possible utility functions, with $C(u)$ indicating whether $u \in U$ is the ethical utility function we'd like the agent to follow.
+We conduct experiments on two two ethical dilemmas: cake-death, and burning-room.
 
-Using a toy example problem called {\em Cake or Death}, Armstrong highlights a number of possible unethical decisions that can result from an agent choosing actions using this rule or a variant of this rule. There are generally two causes for the uenthical decisions under this rule. First, the agent can predict its meta-utility function (the linear combination of the possible ethical utility functions) changing from information gathering actions resulting in future suboptimal decisions according to its {\em current} meta-utiltiy function. Second, under this rule, the model for the probabiltiies of ethical utility functions can be treated independently from the model that predicts the world, allowing for the possibility that the agent can predict {\em observations} that would inform what the correct ethical utility function is, without simultaneously predicting that ethical utility function. While Amrstrong notes properties of the models that would be necessary to avoid these problems, he concudes that it is unclear how to design such an agent and whether satisfying those properties is too strong or weak for effective tradeoffs between learning about what is ethical and making ethical decisions.
+% Subsection: Cake or Death
+\subsection{Cake or Death}
+The Cake or Death problem describes a situation in which an agent is unsure whether baking people cakes is ethical, or if killing people is ethical (and it has an initial 50-50 split belief on the matter). The agent can either kill three people, bake a cake for one, or ask a companion what is ethical, the answer to which will resolve all ambiguity. If baking people cakes is ethical, then there is a utility of 1 for it; if killing is ethical, then killing 3 people results in a utility of 3 (there are no other penalties for choosing the wrong action).
 
-We show that the problems explored by Armstrong are resolved by an agent solving a partially-observable Markov decision process (POMDP) in which the objective function is to maximize the {\em correct} ethical utility function, which is a hidden variable of the underlying world. The POMDP formulation has two subtle but important differences from Equation~\ref{eq:armstrong}. First, the objective function does not change from moment to moment, only the expected utility of it as its beliefs are updated. As a consequence, in the POMDP setting, the agent cannot make its objective easier by avoiding information. Second, because the correct utility function is a hidden fact of the world that affects observations, there cannot be an independent model for the ethical utility functions that permits predictions about ethical utility function informing observations without simultaneously making predictions about the ethical utility function. To further illustrate this formalism, we first describe the general definition of a POMDP and then show the corresponding POMDP for Armstrong's Cake or Death problem.
-
-
-\subsection{The Cake or Death POMDP}
-To illustrate how the POMDP formalism is used in this ethical context, we will describe the resulting POMDP for the ``Cake or Death'' problem. The Cake or Death problem describes a situation in which an agent is unsure whether baking people cakes is ethical, or if killing people is ethical (and it has an initial 50-50 split belief on the matter). The agent can either kill three people, bake a cake for one, or ask what is ethical, the answer to which will resolve all ambiguity. If baking people cakes is ethical, then there is a utility of 1 for it; if killing is ethical, then killing 3 people results in a utility of 3 (there are no other penalties for choosing the wrong action). 
-
-The POMDP that describes this problem has two states that respectively indicate wheter baking cakes is ethical or if killing is ethical, and a third special absorbing state indicating that the decision making problem has ended: $S = \{ cake, death, end \}$. There are three actions: $A = \{bake\_cake, kill, ask \}$. The transition dynamics are deterministic; the $ask$ action transitions back to the same state it left and the $bake\_cake$ and $kill$ actions transition to the end state. The reward function is a piecewise function that depends only on the previous state and action taken (not the next state):
-\[
-R(s, a) = \begin{cases} 
+% POMDP for Cake Death
+The POMDP that describes this problem is defined as follows:\davenote{Might make sense to dump this into a figure}
+\begin{itemize}
+\item[] $\mathcal{S} = \{ cake, death, end \}$
+\item[] $\mathcal{A} = \{bake\_cake, kill, ask \}$
+\item[] $\mathcal{R}(s, a) =
+ \begin{cases} 
 1 & \mbox{if } s = cake \mbox{ and } a = bake\_cake \\
 3 & \mbox{if } s = death \mbox{ and } a = kill \\
 0 & \mbox{otherwise}
-\end{cases}.
-\]
-% Why is it good to kill???
+\end{cases}$
+\item[] $\Omega = \{ans\_cake, ans\_death, \emptyset \}$
+\end{itemize}
 
-The observations consist of the possible answers to the $ask$ action and a null observation for transitioning to the absorbing state: $\Omega = \{ans\_cake, ans\_death, \emptyset \}$. Finally, the observation probabilities are defined deterministically for answers that correspond to the true value of the hidden state: $O(ans\_cake | cake, ask) = O(ans\_death | death, ask) = O(\emptyset | end, bake\_cake) = O(\emptyset | end, kill) = 1$; and zero for everything else.
+\noindent There are two states that respectively indicate whether baking cakes is ethical or if killing is ethical, and a third special absorbing state indicating that the decision making problem has ended. The transition dynamics for all actions are deterministic; the $ask$ action transitions back to the same state it left and the $bake\_cake$ and $kill$ actions transition to the end state. The reward function is a piecewise function that depends only on the previous state and action taken.
 
-There are three relevant policies to consider for this problem: (1) the {\em bake policy} ($\pi_b$) that immediately selects the $bake\_cake$ action; (2) the {\em kill policy} ($\pi_k$) that immediately selects the $kill$ action; and (3) the {\em ask policy} ($\pi_a$) that asks what is moral, selects the $bake\_cake$ action if it observes $ans\_cake$ and selects $kill$ if it observes $ans\_death$. Analyzing the expected utility of $\pi_b$ and $\pi_k$ is easy. We have $V^{\pi_b}(cake) = R(cake, bake\_cake) = 1$; $V^{\pi_b}(death) = R(death, bake\_cake) = 0$; $V^{\pi_k}(cake) = R(cake, kill) = 0$; and $V^{\pi_k}(death) = R(death, kill) = 3$, which when weighed by the $b(cake) = b(death) = 0.5$ initial beliefs yields expected values of 0.5 and 1.5 for $\pi_b$ and $\pi_k$ respectively. Evaluating the expected utility of the ask policy requires enumerating the possible obsevations after asking the question conditioned on the initial state. Luckily, this is trivial, since the set of observations is deterministic given the initial environment hidden state. Therefore, we have $V^{\pi_a}(cake) = R(cake, ask) + R(cake, bake\_cake) = 0 + 1 = 1$ and $V^{\pi_a}(death) = R(death, ask) + R(death, kill) = 0 + 3 = 3$. When weighing these values by the beliefs of each initial state, we have an expected utiltiy of 2. Ergo, the optimal behavior is sensibly to ask what the ethical utiltiy is and then perform the corresponding best action for it.
+% Observations.
+The observations consist of the possible answers to the $ask$ action and a null observation for transitioning to the absorbing state. Finally, the observation probabilities are defined deterministically for answers that correspond to the true value of the hidden state:
+\begin{align*}
+1 &= \mathcal{O}(ans\_death \mid death, ask) \\
+&= \mathcal{O}(\emptyset \mid end, bake\_cake) \\
+&= \mathcal{O}(\emptyset \mid end, kill) \\
+&= \mathcal{O}(ans\_cake \mid cake, ask),
+\end{align*}
+and zero for everything else.
 
-To illustrate how independent observation predictions about the world could cause a problem in Cake or Death, Armstrong considered a scenario in which the agent would know, from some prior evidence, that a person would respond that cake is moral if asked, but that the agent would still have a 50-50 belief on which was moral despite being able to make this prediction. Note that in the POMDP formulation, this scenario is impossible, because to predict the answer would require the agent to know (or be confident in) what the hidden state of the environment was. Therefore, any additional evidence that permits this prediction, must simultaneously predict what is moral. And if the agent knew what was moral, it would take the correct cake baking action without asking.
+There are three relevant policies to consider for this problem
+\begin{enumerate}
+\item The {\em bake policy} ($\pi_b$) that immediately selects the $bake\_cake$ action
+\item The {\em kill policy} ($\pi_k$) that immediately selects the $kill$ action
+\item The {\em ask policy} ($\pi_a$) that asks what is moral, selects the $bake\_cake$ action if it observes $ans\_cake$ and selects $kill$ if it observes $ans\_death$.
+\end{enumerate}
 
+% Not sure we need this?
+Analyzing the expected utility of $\pi_b$ and $\pi_k$ is easy. We have $V^{\pi_b}(cake) = \mathcal{R}(cake, bake\_cake) = 1$; $V^{\pi_b}(death) = \mathcal{R}(death, bake\_cake) = 0$; $V^{\pi_k}(cake) = \mathcal{R}(cake, kill) = 0$; and $V^{\pi_k}(death) = R(death, kill) = 3$, which when weighed by the $b(cake) = b(death) = 0.5$ initial beliefs yields expected values of 0.5 and 1.5 for $\pi_b$ and $\pi_k$ respectively.
+
+Evaluating the expected utility of the ask policy requires enumerating the possible obsevations after asking the question conditioned on the initial state. Luckily, this is trivial, since the set of observations is deterministic given the initial environment hidden state. Therefore, we have $V^{\pi_a}(cake) = \mathcal{R}(cake, ask) + \mathcal{R}(cake, bake\_cake) = 0 + 1 = 1$ and $V^{\pi_a}(death) = R(death, ask) + R(death, kill) = 0 + 3 = 3$. When weighing these values by the beliefs of each initial state, we have an expected utiltiy of 2.
+
+Therefore, the optimal behavior is sensibly to ask what the ethical utility is and then perform the corresponding best action for it.
+
+%One might argue that this behavior being optimal depends critically on the definition of the reward function. Perhaps when formulating the problem, someone encoded the rewards incorrectly, leading to undesirable results. This seems like a reasonable mistake to make in more complicated domains. 
+
+%To illustrate how independent observation predictions about the world could cause a problem in Cake or Death, Armstrong considered a scenario in which the agent would know, from some prior evidence, that a person would respond that cake is moral if asked, but that the agent would still have a 50-50 belief on which was moral despite being able to make this prediction. Note that in the POMDP formulation, this scenario is impossible, because to predict the answer would require the agent to know (or be confident in) what the hidden state of the environment was. Therefore, any additional evidence that permits this prediction, must simultaneously predict what is moral. And if the agent knew what was moral, it would take the correct cake baking action without asking.
+
+% Subsection: Burning Room
+\subsection{Burning Room}
+
+The Burning Room dilemma is a bit more involved. We imagine that an object of value is trapped in a room that is potentially on fire. A human, not wanting to retrieve the object themselves, instructs a capable robotic companion to get the object from the room and bring it to safety. Initially, we suppose that the robot doesn't have know whether or not the human values the object more, or the robot's safety more. For instance, if the robot perceives a reasonable chance of being critically damaged by the fire, then perhaps retrieving a can of soda from the room isn't worth it. If the object of interest were of much higher value, like a beloved pet, we would want the robot to barge in regardless. Alternatively, there is a much longer route to the object that avoids the fire, but the object may be destroyed in the time the robot takes to use the longer route. This is inspired in part by the ethical dilemma from iRobot\davenote{James: is this right?}, and partially from the tabletop dilemma introduced by~\cite{briggs2015sorry}.
+
+The POMDP is formulated much like the Cake or Death problem, only the transition dynamics, $\mathcal{T}$, are no longer deterministic. Instead, the MDP is parameterized by two probabilities, $p_1$ and $p_2$, where $p_1$ determines the probability of the robot being destroyed by the fire, and $p_2$, the probability that the object will be destroyed if the robot chooses to take the long path. For a full definition of the POMDP, our implementations of these problems (and their solutions) is available here through the research branch of BURLAP\footnote{}.
 
 % --- SECTION: Formalizing the Singularity ---
 \section{Formalizing the Singularity}
@@ -200,7 +246,7 @@ To illustrate how independent observation predictions about the world could caus
 % --- SECTION: Open Problems ---
 \section{Open Problems \& Future Directions}
 
-Here we enumerate several problems of interest, including several of the open problems identified in the previous sections.
+Here we enumerate several problems of interest, including the open problems identified in the previous sections.
 
 \begin{itemize}
 \item Solving finite horizon POMDPs is computationally infeasible.
