@@ -1,25 +1,51 @@
 \begin{thebibliography}{}
 
+\bibitem[\protect\citeauthoryear{Armstrong}{2015}]{AAAIW1510183}
+Armstrong, S.
+\newblock 2015.
+\newblock Motivated value selection for artificial agents.
+
 \bibitem[\protect\citeauthoryear{Briggs and Scheutz}{2015}]{briggs2015sorry}
 Briggs, G., and Scheutz, M.
 \newblock 2015.
 \newblock ``sorry, i can't do that'': Developing mechanisms to appropriately
   reject directives in human-robot interactions.
 
-\bibitem[\protect\citeauthoryear{Scheutz \bgroup et al\mbox.\egroup
-  }{2007}]{scheutz2007first}
-Scheutz, M.; Schermerhorn, P.; Kramer, J.; and Anderson, D.
-\newblock 2007.
-\newblock First steps toward natural human-like hri.
-\newblock {\em Autonomous Robots} 22(4):411--423.
+\bibitem[\protect\citeauthoryear{Kaelbling, Littman, and
+  Cassandra}{1998}]{kaelbling1998planning}
+Kaelbling, L.~P.; Littman, M.~L.; and Cassandra, A.~R.
+\newblock 1998.
+\newblock Planning and acting in partially observable stochastic domains.
+\newblock {\em Artificial intelligence} 101(1):99--134.
 
-\bibitem[\protect\citeauthoryear{Tellex \bgroup et al\mbox.\egroup
-  }{2011}]{tellex2011understanding}
-Tellex, S.; Kollar, T.; Dickerson, S.; Walter, M.~R.; Banerjee, A.~G.; Teller,
-  S.~J.; and Roy, N.
-\newblock 2011.
-\newblock Understanding natural language commands for robotic navigation and
-  mobile manipulation.
-\newblock In {\em AAAI}.
+\bibitem[\protect\citeauthoryear{Littman, Dean, and
+  Kaelbling}{1995}]{Littman1995}
+Littman, M.~L.; Dean, T.~L.; and Kaelbling, L.~P.
+\newblock 1995.
+\newblock On the complexity of solving markov decision problems.
+\newblock In {\em Proceedings of the Eleventh Conference on Uncertainty in
+  Artificial Intelligence}, UAI'95,  394--402.
+
+\bibitem[\protect\citeauthoryear{Madani, Hanks, and
+  Condon}{1999}]{madani1999undecidability}
+Madani, O.; Hanks, S.; and Condon, A.
+\newblock 1999.
+\newblock On the undecidability of probabilistic planning and infinite-horizon
+  partially observable markov decision problems.
+\newblock In {\em AAAI/IAAI},  541--548.
+
+\bibitem[\protect\citeauthoryear{Mundhenk \bgroup et al\mbox.\egroup
+  }{2000}]{mundhenk2000complexity}
+Mundhenk, M.; Goldsmith, J.; Lusena, C.; and Allender, E.
+\newblock 2000.
+\newblock Complexity of finite-horizon markov decision process problems.
+\newblock {\em Journal of the ACM (JACM)} 47(4):681--720.
+
+\bibitem[\protect\citeauthoryear{Papadimitriou and
+  Tsitsiklis}{1987}]{papadimitriou1987complexity}
+Papadimitriou, C.~H., and Tsitsiklis, J.~N.
+\newblock 1987.
+\newblock The complexity of markov decision processes.
+\newblock {\em Mathematics of operations research} 12(3):441--450.
 
 \end{thebibliography}
