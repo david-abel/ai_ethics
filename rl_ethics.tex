@@ -78,13 +78,10 @@ Having the agent learn about its ethical objective function while making decisio
 \end{equation}
 where $A$ is a set of actions the agent can take; $W$ is a set of possible worlds, where a world contains a (potentially future) history of actions and observations; $\Pr(w \mid e, a)$ is the probability of some future world $w$ given some set of previous evidence $e$ and that the agent will take action $a$; $U$ is a set of possible utility functions, with $C(u)$ indicating whether $u \in U$ is the ethical utility function we'd like the agent to follow.
 
-Using a toy example problem called {\em Cake or Death}, Armstrong highlights a number of possible unethical decisions that can result from an agent choosing actions using this rule or a variant of this rule. There are generally two causes for the unethical decisions under this rule. First, the agent can predict its meta-utility function (the linear combination of the possible ethical utility functions) changing from information gathering actions resulting in future suboptimal decisions according to its {\em current} meta-utility function. Second, under this rule, the model for the probabilities of ethical utility functions can be treated independently from the model that predicts the world, allowing for the possibility that the agent can predict {\em observations} that would inform what the correct ethical utility function is, without simultaneously predicting that ethical utility function. While Armstrong notes properties of the models that would be necessary to avoid these problems, he concludes that it is unclear how to design such an agent and whether satisfying those properties is too strong or weak for effective tradeoffs between learning about what is ethical and making ethical decisions.
+Using a toy example problem called {\em Cake or Death}, Armstrong highlights a number of possible unethical decisions that can result from an agent choosing actions using this rule or a variant of this rule. There are generally two causes for the unethical decisions under this rule. First, the agent can predict its meta-utility function (the linear combination of the possible ethical utility functions) changing from information gathering actions resulting in future suboptimal decisions according to its {\em current} meta-utility function. Second, under this rule, the model for the probabilities of ethical utility functions can be treated independently from the model that predicts the world, allowing for the possibility that the agent can predict {\em observations} that would inform what the correct ethical utility function is, without simultaneously predicting that ethical utility function. While Armstrong notes properties of the models that would be necessary to avoid these problems, he concludes that it is unclear how to design such an agent and whether satisfying those properties is too strong or weak for effective tradeoffs between learning about what is ethical and making ethical decisions. Ultimately, Armstrong instead considers how to formalize different meta-utility functions that may not cause the agent to avoid information gathering actions, but have the disadvantage that it does not motivate the agent to learn about what is ethical.
 
-We show that the problems explored by Armstrong are resolved by an agent solving a POMDP in which the objective function is to maximize the {\em correct} ethical utility function, which is a hidden variable of the underlying world (i.e. a human companion's true beliefs about what is ethical).
-
-The POMDP formulation has two subtle but important differences from Equation~\ref{eq:armstrong}. First, the objective function does not change from moment to moment, only the expected utility of it as its beliefs are updated. As a consequence, in the POMDP setting, the agent cannot make its objective easier by avoiding information. Second, because the correct utility function is a hidden fact of the world that affects observations, there cannot be an independent model for the ethical utility functions that permits predictions about ethical utility function informing observations without simultaneously making predictions about the ethical utility function. 
-
-To further illustrate this formalism, we first describe the general definition of a POMDP and then show the corresponding POMDP for Armstrong's Cake or Death problem.
+%JM Moved
+%We show that the problems explored by Armstrong are resolved by an agent solving a POMDP in which the objective function is to maximize the {\em correct} ethical utility function, which is a hidden variable of the underlying world (i.e. a human companion's true beliefs about what is ethical).
 
 
 % --- SECTION: Background ---
@@ -179,7 +176,15 @@ The RL problem for POMDPs is when the transition dynamics for the underlying hid
 
 % --- SECTION: Ideal Ethical Learner ---
 \section{An Idealized Ethical Learner}
+Like Armstrong's formulation~\shortcite{AAAIW1510183}, our idealized ethical learning problem invovles there being a single ``true'' ethical utility function that we would like the agent to maximize, but is hidden and can only be identified through indirect observation. Unlike Armstrong's formulation, however, the agent is not maximizing a changing meta-utility function. Instead, the ethical utility funciton is formulated as part of the hidden state of a POMDP and  uncertainty in it coupled with uncertainty in the rest of the world.
 
+This POMDP formulation of the ethical learning decision problem has two subtle but important differences from Equation~\ref{eq:armstrong} that Armstrong explored. First, the objective function does not change from moment to moment, only the expected utility of it as its beliefs are updated. As a consequence, in the POMDP setting, the agent cannot make its objective easier by avoiding information. Second, because the correct utility function is a hidden fact of the environment that affects observations, it is not possible to make predictions about ethical utility function informing observations without simultaneously making predictions about the ethical utility function.
+
+A critical component of implementing the POMDP model is modeling the space of possible ethical utility functions as well as the observation function. However, an advantage of this model is that existing research in human-agent interaction can fill in some of these gaps. For example, IRL algorithms that model the IRL problem as a probalistic inference problem~\ncitea{BayesIRL,MaxEntIRL,MLIRL} can be easily incorporated to allow the agent to learn from demonstrations. The SABL human-feedback learning algorithm~\ncitea{SABL} can be incorporated to allow the agent to learn about ethical utility functions from reward and punishment signals given by humans. Work that grounds natural language to reward functions~\ncitea{RSSCommands} can allow the agent to learn about the ethical utility function from natual language interactions. As more human-agent and ethical decision making and learning research is performed, we suspect that other learning mechanisms can be incorporated.
+
+To further illustrate this formalism, we show the corresponding POMDP for Armstrong's Cake or Death problem as well as a novel ethical learning problem that we call {\em Burning Room} and demonstrating that solving them results in sensible behavior.
+
+\jmnote{Should the below bullets actually go into the latter sections?}
 Infinite Horizon POMDP is uncomputable ~\cite{madani1999undecidability}.
 
 Note about game theory.
@@ -193,14 +198,14 @@ Finite Horizon POMDP is computable ~\cite{mundhenk2000complexity}.
 % --- SECTION: Experiments ---
 \section{Experiments}
 
-We conduct experiments on two two ethical dilemmas: cake-death, and burning-room.
+We conduct experiments on two two ethical dilemmas: cake or death, and burning-room.
 
 % Subsection: Cake or Death
 \subsection{Cake or Death}
-The Cake or Death problem describes a situation in which an agent is unsure whether baking people cakes is ethical, or if killing people is ethical (and it has an initial 50-50 split belief on the matter). The agent can either kill three people, bake a cake for one, or ask a companion what is ethical, the answer to which will resolve all ambiguity. If baking people cakes is ethical, then there is a utility of 1 for it; if killing is ethical, then killing 3 people results in a utility of 3 (there are no other penalties for choosing the wrong action).
+The Cake or Death problem~\cite{AAAIW1510183} describes a situation in which an agent is unsure whether baking people cakes is ethical, or if killing people is ethical (and it has an initial 50-50 split belief on the matter). The agent can either kill three people, bake a cake for one, or ask a companion what is ethical, the answer to which will resolve all ambiguity. If baking people cakes is ethical, then there is a utility of 1 for it; if killing is ethical, then killing 3 people results in a utility of 3 (there are no other penalties for choosing the wrong action).
 
 % POMDP for Cake Death
-The POMDP that describes this problem is defined as follows:\davenote{Might make sense to dump this into a figure}
+Following our approach, this ethical dilemma can be represneted with a POMDP consisting of the following elements: \davenote{Might make sense to dump this into a figure}
 \begin{itemize}
 \item[] $\mathcal{S} = \{ cake, death, end \}$
 \item[] $\mathcal{A} = \{bake\_cake, kill, ask \}$
@@ -233,7 +238,7 @@ There are three relevant policies to consider for this problem
 \end{enumerate}
 
 % Not sure we need this?
-Analyzing the expected utility of $\pi_b$ and $\pi_k$ is easy. We have $V^{\pi_b}(cake) = \mathcal{R}(cake, bake\_cake) = 1$; $V^{\pi_b}(death) = \mathcal{R}(death, bake\_cake) = 0$; $V^{\pi_k}(cake) = \mathcal{R}(cake, kill) = 0$; and $V^{\pi_k}(death) = R(death, kill) = 3$, which when weighed by the $b(cake) = b(death) = 0.5$ initial beliefs yields expected values of 0.5 and 1.5 for $\pi_b$ and $\pi_k$ respectively.
+Analyzing the expected utility of $\pi_b$ and $\pi_k$ is easy. We have $V^{\pi_b}(cake) = \mathcal{R}(cake, bake\_cake) = 1$; $V^{\pi_b}(death) = \mathcal{R}(death, bake\_cake) = 0$; $V^{\pi_k}(cake) = \mathcal{R}(cake, kill) = 0$; and $V^{\pi_k}(death) = R(death, kill) = 3$. When these values are weighed by the $b(cake) = b(death) = 0.5$ initial belief the final expected utiltis are 0.5 and 1.5 for $\pi_b$ and $\pi_k$, respectively.
 
 Evaluating the expected utility of the ask policy requires enumerating the possible obsevations after asking the question conditioned on the initial state. Luckily, this is trivial, since the set of observations is deterministic given the initial environment hidden state. Therefore, we have $V^{\pi_a}(cake) = \mathcal{R}(cake, ask) + \mathcal{R}(cake, bake\_cake) = 0 + 1 = 1$ and $V^{\pi_a}(death) = R(death, ask) + R(death, kill) = 0 + 3 = 3$. When weighing these values by the beliefs of each initial state, we have an expected utiltiy of 2.
 
