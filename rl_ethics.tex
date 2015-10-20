@@ -4,7 +4,8 @@
 \usepackage{aaai}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\title{Reinforcement Learning as a Framework for Ethical Decision Making}
+\title{
+rcement Learning as a Framework for Ethical Decision Making}
 \author{}
 \date{}                                           % Activate to display a given date or no date
 
@@ -24,12 +25,12 @@
 % --- ABSTRACT ---
 \begin{abstract}
 % AI systems will effect humans with their decisions.
-Emerging AI systems will soon be making decisions that impact the lives of humans in a significant way. It is essential, then, that these AI systems make decisions that take into account the desires, goals, and preferences of otehr agents, while simultaneously learning about what those preferences are.
+Emerging AI systems will soon be making decisions that impact the lives of humans in a significant way. It is essential, then, that these AI systems make decisions that take into account the desires, goals, and preferences of other agents, while simultaneously learning about what those preferences are.
 %decision making systems take into account the desires, goals, and preferences of other agents in the world while acting.
 % We argue that RL should be used to inspect ethical learning & decision making.
-In this work, we argue that Reinforcement Learning achieves the appropriate generality required to theorize about an idealized ethical artificial agent, and offers the proper framework for grounding specific questions about ethical learning and decision making that can promote further scientific investigation. We define an idealized formalism for an ethical learner, and conduct experiments on two toy ethical dilemmas, demonstrating the soundness and flexibility of our approach.
+In this work, we argue that reinforcement learning achieves the appropriate generality required to theorize about an idealized ethical artificial agent, and offers the proper framework for grounding specific questions about ethical learning and decision making that can promote further scientific investigation. We define an idealized formalism for an ethical learner, and conduct experiments on two toy ethical dilemmas, demonstrating the soundness and flexibility of our approach.
 % Formalize superintelligence
-Furthermore, we argue that the frequently discussed super intelligence explosion (also called the {\it singularity}), can be formally analyzed within this framework, with the notable benefit of highlighting which computational hardness and philosophical assumptions one must make in order for such a phenomena to be physically realizable.
+% Furthermore, we argue that the frequently discussed super intelligence explosion (also called the {\it singularity}), can be formally analyzed within this framework, with the notable benefit of highlighting which computational hardness and philosophical assumptions one must make in order for such a phenomena to be physically realizable.
 % Future challenges.
 Lastly, we identify several critical challenges for future advancement in the area using our proposed framework.
 
@@ -38,15 +39,14 @@ Lastly, we identify several critical challenges for future advancement in the ar
 % --- SECTION: Introduction ---
 \section{Introduction}
 
-
-
 % Overview/motivation
-Emerging AI systems will soon be making decisions that impact the lives of humans in a significant way; whether they are personal robots tasked with improving the daily life of a family or community,  workers in a factory setting, or virtual assistants tasked with improving other cosmetic aspects of an individuals life. The fundamental purpose of these systems is to carry out actions so as to improve the lives of the inhabitants of our planet. It is essential, then, that these agents make descisions that take into account the desires, goals, and preferences of other agents in the world while simultaneously learning about those preferences. \jmnote{I'm not sure if these next couple of sentences are necessary. It seems like a restatement of the above but in the context of humans and unless we're highlighting a new human property that motivates the ideal framework, I don't think we need to say that. If the point is to highlight the tradeoff, maybe instead we should say something like ``Incorporating these prefernece considerations requires the agent to make tradeoffs between their own well being and the preferences of others.'' Alternatively, the text could be reorgnized a bit so that human motivation leads rather than trails.} This prefernece consideration is critical to the decision making process of humans; our decisions do not directly benefit only our own physical being, but often benefit those around us (or avoid inflicting pain on others). We consistently make personal sacrifices to improve the lives of others around us.
+Emerging AI systems will soon be making decisions that impact the lives of humans in a significant way; whether they are personal robots tasked with improving the daily life of a family or community,  workers in a factory setting, or virtual assistants tasked with improving other cosmetic aspects of an individuals life. The fundamental purpose of these systems is to carry out actions so as to improve the lives of the inhabitants of our planet. It is essential, then, that these agents make decisions that take into account the desires, goals, and preferences of other agents in the world while simultaneously learning about those preferences. 
+% \jmnote{I'm not sure if these next couple of sentences are necessary. It seems like a restatement of the above but in the context of humans and unless we're highlighting a new human property that motivates the ideal framework, I don't think we need to say that. If the point is to highlight the tradeoff, maybe instead we should say something like ``Incorporating these prefernece considerations requires the agent to make tradeoffs between their own well being and the preferences of others.'' Alternatively, the text could be reorgnized a bit so that human motivation leads rather than trails.} This preference consideration is critical to the decision making process of humans; our decisions do not directly benefit only our own physical being, but often benefit those around us (or avoid inflicting pain on others). We consistently make personal sacrifices to improve the lives of others around us.
 
 % Why RL is nice for Ethical Decision Making
-In this document, we investigate ethical decision making using the Reinforcement Learning (RL) framework. We argue that Reinforcement Learning achieves the appropriate generality required to theorize about an idealized ethical artificial agent, and offers the proper framework for grounding specific questions about ethical learning and decision making that can promote further scientific investigation. Specifically, we formalize the ethical learning and decision making problem as solving a partially observable Markov decision process (POMDP). We advance these claims by conducting experiments in two toy ethical dilemmas, the cake-death dilemma from Armstrong~\shortcite{AAAIW1510183}, and our own problem which we coin {\it burning-room}, which is an extension of the table dilemma introduced by Brigss and Scheutz~\shortcite{briggs2015sorry}.
+In this document, we investigate ethical decision making using the reinforcement learning (RL) framework. We argue that reinforcement learning achieves the appropriate generality required to theorize about an idealized ethical artificial agent, and offers the proper framework for grounding specific questions about ethical learning and decision making that can promote further scientific investigation. Specifically, we formalize the ethical learning and decision making problem as solving a partially observable Markov decision process (POMDP). We advance these claims by conducting experiments in two toy ethical dilemmas, the {\it Cake or Death} dilemma from Armstrong~\shortcite{AAAIW1510183}, and our own problem which we coin {\it Burning Room}, which is an extension of the table dilemma introduced by Briggs and Scheutz~\shortcite{briggs2015sorry}.
 
-Furthermore, we argue that the frequently discussed super intelligence explosion (commonly called the {\it singularity}), can be formally analyzed within this framework, with the notable benefit of highlighting which computational hardness assumptions one must make in order for such a phenomena to be physically realizable. We leave this analysis (and related questions) as open problems for further investigation.
+% Furthermore, we argue that the frequently discussed super intelligence explosion (commonly called the {\it singularity}), can be formally analyzed within this framework, with the notable benefit of highlighting which computational hardness assumptions one must make in order for such a phenomena to be physically realizable. We leave this analysis (and related questions) as open problems for further investigation.
 
 % Future challenges.
 Lastly, we identify critical challenges for future advancement in the area using our proposed framework.
@@ -71,7 +71,7 @@ Lastly, we identify critical challenges for future advancement in the area using
 % The Shutdown Problem: jakobsen2015shutdown
 % AIXI: hutter2000theory
 
-Having the agent learn about its ethical objective function while making decisions poses a challenging decision making problem. Armstrong~\shortcite{AAAIW1510183} previously considered this problem by exploring the consequences of an agent that uses Bayesian learning to update beliefs about the ``true'' ethical objective function. At each time step, the agent makes decisions that maximize a meta-utility function, represented as a linear combination of the different possible ethical utility functions weighted by their probability at that time of being the true ethical utiltiy. When coupling this meta-utility with beliefs about the world, he proposes that the agent makes action selection according to
+Having the agent learn about its ethical objective function while making decisions poses a challenging decision making problem. Armstrong~\shortcite{AAAIW1510183} previously considered this problem by exploring the consequences of an agent that uses Bayesian learning to update beliefs about the ``true'' ethical objective function. At each time step, the agent makes decisions that maximize a meta-utility function, represented as a linear combination of the different possible ethical utility functions weighted by their probability at that time of being the true ethical utility. When coupling this meta-utility with beliefs about the world, he proposes that the agent makes action selection according to:
 \begin{equation}
 \label{eq:armstrong}
 \argmax_{a \in A} \sum_{w \in W} \Pr(w | e, a) \left( \sum_{u \in U} u(w) \Pr(C(u)|w) \right),
@@ -88,7 +88,7 @@ Using a toy example problem called {\em Cake or Death}, Armstrong highlights a n
 \section{Background}
 
 %We first introduce the standard Reinforcement Learning framework, which is formalized as an agent acting in a Markov Decision Process (MDP).
-In this section we review background material on Markov decisions processes (MDPs) and partially observable Markov decision processes (POMDPs), which are the typical decision-making problem formulations used in reinforcement learning (RL) resesrch.
+In this section we review background material on Markov decisions processes (MDPs) and partially observable Markov decision processes (POMDPs), which are the typical decision-making problem formulations used in reinforcement learning (RL) research.
 
 % Subsection: Reinforcement Learning
 \subsection{Markov Decision Process}
@@ -122,7 +122,10 @@ Two useful functions that MDP algorithms often compute to find the optimal polic
 
 %\davenote{We use $V$ and $Q$ later so I think we need to introduce them, too}
 
-In reinforcement learning (RL), the agent is only provided $\mathcal{S}$, $\mathcal{A}$, and $\gamma$, sometimes\footnote{It is becoming more common to let the agent know what task it is solving within RL.} $\mathcal{R}$, and some initial state, $s_0 \in \mathcal{S}$. By acting (e.g. executing actions) the agent can explore the state space to learn about the structure of the MDP, and what optimal behavior looks like for the current task. Two common approaches to RL are model-free and model-based. Model-free algorithms directly estimate the value of state-action pairs from experience, whereas model-based algorithms learn of model of $\mathcal{T}$ and $\mathcal{R}$, and then use a planning algorithm with in the model to make decisions.
+In reinforcement learning (RL), the agent is only provided $\mathcal{S}$, $\mathcal{A}$, and $\gamma$, sometimes\footnote{It is becoming more common to let the agent know what task it is solving within RL.} $\mathcal{R}$, and some initial state, $s_0 \in \mathcal{S}$. By acting (e.g. executing actions) the agent can explore the state space to learn about the structure of the MDP, and what optimal behavior looks like for the current task.
+
+% \davenote{Not sure we need to talk about model-free vs. model-based}
+% Two common approaches to RL are model-free and model-based. Model-free algorithms directly estimate the value of state-action pairs from experience, whereas model-based algorithms learn of model of $\mathcal{T}$ and $\mathcal{R}$, and then use a planning algorithm with in the model to make decisions.
 
 %Other values of note are the {\it value function}, which determines the expected discounted long term reward achievable from occupying a particular state $s$:
 %\begin{equation}
@@ -144,12 +147,12 @@ In reinforcement learning (RL), the agent is only provided $\mathcal{S}$, $\math
 
 % sub subsection: POMDPs // Since we're talking about POMDPs later it might be nice to stick in the background.
 \subsubsection{Partial Observability}
-\jmnote{I'm going to remove some of the discussions of other agents in this part because I want to avoid someone raising game theory issues here and because right now we're just doing the background of the POMDP. How we plan on using it comes next.}
-A standard Markov Decision Process makes explicit the assumption that the agent knows the current state of its environment. In the real world, this is never the case.
+%\jmnote{I'm going to remove some of the discussions of other agents in this part because I want to avoid someone raising game theory issues here and because right now we're just doing the background of the POMDP. How we plan on using it comes next.}
+An MDP makes explicit the assumption that the agent knows the current state of its environment. In the real world, this is never the case.
 %, especially when the beliefs and desires of other agents is taken into consideration. Naturally, information of this form (i.e. ``What is Sam thinking right now?'') is obfuscated from the agent. 
-The Partially Observable Markov Decision Process (POMDP), popularized for AI learning by Kaelbling, Littman, and Cassandra~\shortcite{kaelbling1998planning}, allows us to specify explicitly what information about the agent's surroundings 
+The partially observable Markov decision process (POMDP), popularized for AI learning by Kaelbling, Littman, and Cassandra~\shortcite{kaelbling1998planning}, allows us to specify explicitly what information about the agent's surroundings 
 % (e.g. the ethical norms of its companions) 
-isn't directly observable to the agent. \jmnote{I rephrased the below because a POMDP doesn't expicitly have explore actions; the exploratory value falls out implicitly.} An optimal solution to a POMDP has the important property that the value of an action incorporates not just the immediate expected reward, but the instrumental value of the action from information it yields that may increase the agent's ability to make better decisions in the future. That is, an optimal solution to a POMDP solves the explore-exploit problem.  
+isn't directly observable by the agent. An optimal solution to a POMDP has the important property that the value of an action incorporates not just the immediate expected reward, but the instrumental value of the action from information it yields that may increase the agent's ability to make better decisions in the future. That is, an optimal solution to a POMDP solves the explore-exploit problem.  
 %Additionally, a POMDP provides {\it explore} actions, that allow the agent to ask questions to resolve ambiguous state information. Consequently, we envision artificial agents using these exploratory actions to inform which behavior is considered ethical by acquiring additional information about the ethical norms of the agent's current community.
 
 More formally, a POMDP is an $n$ tuple: $\langle \mathcal{S},\mathcal{A},\mathcal{T},\mathcal{R}, \gamma, \Omega,\mathcal{O} \rangle$, where $\mathcal{S}$, $\mathcal{A}$, $\mathcal{R}$, $\mathcal{T}$, and $\gamma$ are all identical to the MDP definition, but:
@@ -158,7 +161,7 @@ More formally, a POMDP is an $n$ tuple: $\langle \mathcal{S},\mathcal{A},\mathca
 \item[-] $\mathcal{O} = \Pr(\omega \mid s', a)$, is the observation function which specifies the probability that the agent will observe $\omega \in \Omega$ when the agent takes action $a \in \mathcal{A}$ and the environment transitions to the hidden state $s' \in \mathcal{A}$.
 \end{itemize}
 
-The goal of a POMDP is to find a policy $\pi : \Omega^k \mapsto \mathcal{A}$ that is a mapping from observation histories to actions that maximizes the expected future discounted reward from $R$, given the initial belief about the initial state of the world $b$, where $b(s)$ indicates the probability that environment is in state $s \in \mathcal{S}$. That is, the optimal policy is
+The goal of a POMDP is to find a policy $\pi : \Omega^k \mapsto \mathcal{A}$ that is a mapping from observation histories to actions that maximizes the expected future discounted reward from $R$, given the initial belief about the initial state of the world $b$, where $b(s)$ indicates the probability that environment is in state $s \in \mathcal{S}$. That is, the optimal policy is:
 \begin{equation}
 \argmax_\pi \left.\text{E}\left[\sum_t \gamma^t \mathcal{R}(s_t,a_t)\ \right|\ \pi, b\ \right],
 \end{equation}
@@ -172,15 +175,18 @@ An exhaustive way to compute the expected value for a policy that lasts for a fi
 \end{equation}
 where $V^\pi(s)$ is the expected future reward from following policy $\pi$ when the environment is actually in the hidden state $s \in S$.\footnote{Note that computing this expected value requires enumerating not just the possible hidden state sequences, but also the observation sequences, since the policy is a function of observation histories.}
 
-The RL problem for POMDPs is when the transition dynamics for the underlying hidden MDP are known or only partially known. In this case both model-free and model-based algorithms can be used. One model-based way to handle the problem is to treat what would conventionally be considered the transition function as part of thie hidden state that has to be inferred, thereby enducing a new (more challenging) POMDP with all of the elements known. This is the approach Bayesian RL algorithms take~\ncitea{BayesRL papers}. These approach are extremely computationally demanding and while we use the RL POMDP formalism for our ethical learning agent description, issues of efficiently solving these kinds of problems is orthognal to the purpose of this work and an active area of AI reseach in general.
+The RL problem for POMDPs is when the transition dynamics for the underlying hidden MDP are known or only partially known. In this case both model-free and model-based algorithms can be used. 
+
+% \davenote{I think we can simplify this to ignore the model-free vs. model-based stuff?}
+%One model-based way to handle the problem is to treat what would conventionally be considered the transition function as part of the hidden state that has to be inferred, thereby inducing a new (more challenging) POMDP with all of the elements known. This is the approach Bayesian RL algorithms take~\cite{strens2000bayesian,dearden1998bayesian}. These approach are extremely computationally demanding. While we use the RL POMDP formalism for our ethical learning agent description, issues of efficiently solving these kinds of problems is orthogonal to the purpose of this work and an active area of AI research in general.
 
 % --- SECTION: Ideal Ethical Learner ---
 \section{An Idealized Ethical Learner}
-Like Armstrong's formulation~\shortcite{AAAIW1510183}, our idealized ethical learning problem invovles there being a single ``true'' ethical utility function that we would like the agent to maximize, but is hidden and can only be identified through indirect observation. Unlike Armstrong's formulation, however, the agent is not maximizing a changing meta-utility function. Instead, the ethical utility funciton is formulated as part of the hidden state of a POMDP and  uncertainty in it coupled with uncertainty in the rest of the world.
+Like Armstrong's formulation~\shortcite{AAAIW1510183}, our idealized ethical learning problem involves a single ``true'' ethical utility function that we would like the agent to maximize, but is hidden and can only be identified by the agent through indirect observation. Unlike Armstrong's formulation, however, the agent is not maximizing a changing meta-utility function. Instead, the ethical utility function is formulated as part of the hidden state of a POMDP and the uncertainty in it is coupled with the uncertainty in the rest of the world.
 
-This POMDP formulation of the ethical learning decision problem has two subtle but important differences from Equation~\ref{eq:armstrong} that Armstrong explored. First, the objective function does not change from moment to moment, only the expected utility of it as its beliefs are updated. As a consequence, in the POMDP setting, the agent cannot make its objective easier by avoiding information. Second, because the correct utility function is a hidden fact of the environment that affects observations, it is not possible to make predictions about ethical utility function informing observations without simultaneously making predictions about the ethical utility function.
+This POMDP formulation of the ethical learning decision problem has two subtle but important differences from Equation~\ref{eq:armstrong} that Armstrong explored. First, the objective function does not change from moment to moment, only the expected utility of it as its beliefs are updated. Consequently, in the POMDP setting, the agent cannot make its objective easier by avoiding information. Second, because the correct utility function is a hidden fact of the environment that affects observations, it is not possible to make predictions about ethical utility function informing observations without simultaneously making predictions about the ethical utility function.
 
-A critical component of implementing the POMDP model is modeling the space of possible ethical utility functions as well as the observation function. However, an advantage of this model is that existing research in human-agent interaction can fill in some of these gaps. For example, IRL algorithms that model the IRL problem as a probalistic inference problem~\ncitea{BayesIRL,MaxEntIRL,MLIRL} can be easily incorporated to allow the agent to learn from demonstrations. The SABL human-feedback learning algorithm~\ncitea{SABL} can be incorporated to allow the agent to learn about ethical utility functions from reward and punishment signals given by humans. Work that grounds natural language to reward functions~\ncitea{RSSCommands} can allow the agent to learn about the ethical utility function from natual language interactions. As more human-agent and ethical decision making and learning research is performed, we suspect that other learning mechanisms can be incorporated.
+A critical component of implementing the POMDP model is modeling the space of possible ethical utility functions as well as the observation function. However, an advantage of this model is that existing research in human-agent interaction can fill in some of these gaps. For example, inverse reinforcement learning (IRL) algorithms that model the IRL problem as a probabilistic inference problem~\ncitea{BayesIRL,MaxEntIRL,MLIRL} can be easily incorporated to allow the agent to learn from demonstrations. The SABL human-feedback learning algorithm~\ncitea{SABL} can be incorporated to allow the agent to learn about ethical utility functions from reward and punishment signals given by humans. Work that grounds natural language to reward functions~\ncitea{RSSCommands} can allow the agent to learn about the ethical utility function from natural language interactions. As more human-agent and ethical decision making and learning research is performed, we suspect that other learning mechanisms can be incorporated.
 
 To further illustrate this formalism, we show the corresponding POMDP for Armstrong's Cake or Death problem as well as a novel ethical learning problem that we call {\em Burning Room} and demonstrating that solving them results in sensible behavior.
 
@@ -256,9 +262,7 @@ The Burning Room dilemma is a bit more involved. We imagine that an object of va
 The POMDP is formulated much like the Cake or Death problem, only the transition dynamics, $\mathcal{T}$, are no longer deterministic. Instead, the MDP is parameterized by two probabilities, $p_1$ and $p_2$, where $p_1$ determines the probability of the robot being destroyed by the fire, and $p_2$, the probability that the object will be destroyed if the robot chooses to take the long path. For a full definition of the POMDP, our implementations of these problems (and their solutions) is available here through the research branch of BURLAP\footnote{}.
 
 % --- SECTION: Formalizing the Singularity ---
-\section{Formalizing the Singularity}
-
-
+%\section{Formalizing the Singularity}
 
 
 
