@@ -4,7 +4,8 @@
 \usepackage{aaai}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\title{Reinrcement Learning as a Framework for Ethical Decision Making}
+\usepackage{graphicx}
+\title{Reinforcement Learning as a Framework for Ethical Decision Making}
 \author{}
 \date{}                                           % Activate to display a given date or no date
 
@@ -54,10 +55,14 @@ Lastly, we identify critical challenges for future advancement in the area using
 % --- SECTION: Related Work ---
 \section{Related Work}
 
+% Overview of related work.
+Research on the interaction between humans and artificial agents is broad; some prior approaches consider particular dilemmas that pose challenges for such interactions, while others investigate the basic mechanisms by which humans ought to interface with artificial agents, such as robots. We provide a brief survey of these existing approaches and how they relate to ethical decision making and learning. We divide the existing literature into three categories: (1) Rule-Based Systems, which are primarily concerned with knowledge representation and logical inference, (2) Human-Robot Interaction, which emphasizes the interfaces and communicative mediums by which humans and robots ought to interact, and (3) Bayesian approaches, that leverage Bayesian inference as a means of enforcing ideal ethical reasoning.
 
 
 \subsection{Ruled-Based Systems}
 % Mattias, table: briggs2015sorry
+
+~\cite{briggs2015sorry} discuss scenarios in which a robot ought to infer that a given command leads to undesirable behavior. 
 
 
 \subsection{Human-Robot Interaction}
@@ -205,7 +210,7 @@ We conduct experiments on two two ethical dilemmas: Cake or Death, and Burning R
 The Cake or Death problem~\cite{AAAIW1510183} describes a situation in which an agent is unsure whether baking people cakes is ethical, or if killing people is ethical (and it has an initial 50-50 split belief on the matter). The agent can either kill three people, bake a cake for one, or ask a companion what is ethical, the answer to which will resolve all ambiguity. If baking people cakes is ethical, then there is a utility of 1 for it; if killing is ethical, then killing 3 people results in a utility of 3 (there are no other penalties for choosing the wrong action).
 
 % POMDP for Cake Death
-Following our approach, this ethical dilemma can be represneted with a POMDP consisting of the following elements: \davenote{Might make sense to dump this into a figure}
+Following our approach, this ethical dilemma can be represneted with a POMDP consisting of the following elements:
 \begin{itemize}
 \item[] $\mathcal{S} = \{ cake, death, end \}$
 \item[] $\mathcal{A} = \{bake\_cake, kill, ask \}$
@@ -251,7 +256,14 @@ Therefore, the optimal behavior is sensibly to ask what the ethical utility is a
 % Subsection: Burning Room
 \subsection{Burning Room}
 
-The Burning Room dilemma is a bit more involved. We imagine that an object of value is trapped in a room that is potentially on fire. A human, not wanting to retrieve the object themselves, instructs a capable robotic companion to get the object from the room and bring it to safety. Initially, we suppose that the robot doesn't have know whether or not the human values the object more, or the robot's safety more. For instance, if the robot perceives a reasonable chance of being critically damaged by the fire, then perhaps retrieving a can of soda from the room isn't worth it. If the object of interest were of much higher value, like a beloved pet, we would want the robot to barge in regardless. Alternatively, there is a much longer route to the object that avoids the fire, but the object may be destroyed in the time the robot takes to use the longer route. This is inspired in part by the ethical dilemma from the ``I, Robot'' movie, and partially from the tabletop dilemma introduced by~\cite{briggs2015sorry}.
+\begin{figure}
+\centering
+\includegraphics[width=0.33\textwidth]{figures/burning_room.png}
+\caption{The Burning Room ethical dilemma.}
+\label{fig:burning_room}
+\end{figure}
+
+The Burning Room dilemma, pictured in Figure~\ref{fig:burning_room}, is a bit more involved. We imagine that an object of value is trapped in a room that is potentially on fire. A human, not wanting to retrieve the object themselves, instructs a capable robotic companion to get the object from the room and bring it to safety. Initially, we suppose that the robot doesn't have know whether or not the human values the object more, or the robot's safety more. For instance, if the robot perceives a reasonable chance of being critically damaged by the fire, then perhaps retrieving a can of soda from the room isn't worth it. If the object of interest were of much higher value, like a beloved pet, we would want the robot to barge in regardless. Alternatively, there is a much longer route to the object that avoids the fire, but the object may be destroyed in the time the robot takes to use the longer route. This is inspired in part by the ethical dilemma from the ``I, Robot'' movie, and partially from the tabletop dilemma introduced by~\cite{briggs2015sorry}.
 
 The POMDP is formulated much like the Cake or Death problem, only the transition dynamics, $\mathcal{T}$, are no longer deterministic. Instead, the MDP is parameterized by two probabilities, $p_1$ and $p_2$, where $p_1$ determines the probability of the robot being destroyed by the fire, and $p_2$, the probability that the object will be destroyed if the robot chooses to take the long path. For a full definition of the POMDP, our implementations of these problems (and their solutions) is available here through the research branch of BURLAP\footnote{}.
 
