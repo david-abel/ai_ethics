@@ -4,8 +4,7 @@
 \usepackage{aaai}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\title{
-rcement Learning as a Framework for Ethical Decision Making}
+\title{Reinrcement Learning as a Framework for Ethical Decision Making}
 \author{}
 \date{}                                           % Activate to display a given date or no date
 
@@ -102,14 +101,14 @@ An MDP is a five tuple: $\langle \mathcal{S}, \mathcal{A}, \mathcal{R}, \mathcal
 \item[-] $\gamma \in [0:1]$, is a discount factor that specifies how much the agent prefers short term rewards over long term rewards.
 \end{itemize}
 
-In general, the goal of an agent acting in an MDP is to maximize the discounted long term reward received. 
+The goal of an agent acting in an MDP is to maximize the discounted long term reward received. 
 
 One version of this is the {\it infinite-horizon} objective, in which the agent must maximize its discounted long term reward arbitrarily into the future:
 \begin{equation}
 \max \sum_{t=0}^{\infty} \gamma^t R(s_t,a_t)
 \end{equation}
 
-Notably, the discount factor $\gamma$, decreases to $0$ as $t \rightarrow \infty$, so the agent is biased toward maximizing reward closer to the present. Alternatively, one could consider the {\it finite-horizon} case, in which the agent must maximize its discounted reward up to a certain point in the future, say $k$ time steps away:
+Notably, the discount factor $\gamma$, decreases to $0$ as $t \rightarrow \infty$, so the agent is biased toward maximizing reward closer to the present. Alternatively, one could consider the {\it finite-horizon} case, in which the agent must maximize its reward up to a certain point in the future, say $k$ time steps away:
 \begin{equation}
 \max \sum_{t=0}^{k} R(s_t,a_t)
 \end{equation}
@@ -122,26 +121,19 @@ Two useful functions that MDP algorithms often compute to find the optimal polic
 
 %\davenote{We use $V$ and $Q$ later so I think we need to introduce them, too}
 
-In reinforcement learning (RL), the agent is only provided $\mathcal{S}$, $\mathcal{A}$, and $\gamma$, sometimes\footnote{It is becoming more common to let the agent know what task it is solving within RL.} $\mathcal{R}$, and some initial state, $s_0 \in \mathcal{S}$. By acting (e.g. executing actions) the agent can explore the state space to learn about the structure of the MDP, and what optimal behavior looks like for the current task.
+In reinforcement learning (RL), the agent is only provided $\mathcal{S}$, $\mathcal{A}$, and $\gamma$, sometimes\footnote{It is becoming more common to let the agent know what task it is solving within RL.} $\mathcal{R}$, and some initial state, $s_0 \in \mathcal{S}$. By acting (e.g. executing actions) the agent can explore the state space to learn about the structure of the MDP, and identify optimal behavior for the current task.
 
 % \davenote{Not sure we need to talk about model-free vs. model-based}
 % Two common approaches to RL are model-free and model-based. Model-free algorithms directly estimate the value of state-action pairs from experience, whereas model-based algorithms learn of model of $\mathcal{T}$ and $\mathcal{R}$, and then use a planning algorithm with in the model to make decisions.
 
-%Other values of note are the {\it value function}, which determines the expected discounted long term reward achievable from occupying a particular state $s$:
-%\begin{equation}
-%V^\pi(s) = \left.\text{E}\left[\sum_{k=0}^\infty \gamma^k r_{t+k+1}\ \right|\ s_t = s\right]
-%\end{equation}
-
-
-
-
-
-
 % Subsection: Complexity results for RL
 \subsection{Complexity}
 
+Computational complexity is the metric of usual interest in solving MDPs, as the space required is usually negligible in comparison. Notably,~\cite{papadimitriou1987complexity} proved that computing solutions to stochastic MDPs is P-Complete, demonstrating that optimal solutions to MDPs must be computed sequentially.
 
-\davenote{My plan was to put a few results here regarding solving MDPs (from~\cite{papadimitriou1987complexity,Littman1995}) possibly mention pac-mdp results.}
+Also of interest in RL is the measure of {\it Sample Complexity}, introduced by~\cite{kakade2003sample}. Sample Complexity measures the number of interactions an agent must have with its environment in order to learn to behave well. We can define ``behaving well" using the PAC-MDP (Probability Approximately Correct in Markov Decision Processes) criteria~\shortcite{strehl2009reinforcement}, which imposes sample complexity bounds similar to the Probably Approximately Correct learning framework introduced by~\cite{valiant1984theory}. In particular, an RL algorithm is PAC-MDP, if, with high probability, the algorithm's estimation of the value function $V^\pi(s)$ for all states is within $\epsilon$ of the optimal after a polynomial number of samples (that is, polynomial in the size of the MDP and approximation parameters).
+
+There are several known PAC-MDP algorithms for solving MDPs, including Delayed-Q Learning~\shortcite{strehl2006pac}, \textsc{Rmax}~\shortcite{brafman2003r}, and $E^3$~\shortcite{kearns2002near}.
 
 
 
@@ -175,7 +167,14 @@ An exhaustive way to compute the expected value for a policy that lasts for a fi
 \end{equation}
 where $V^\pi(s)$ is the expected future reward from following policy $\pi$ when the environment is actually in the hidden state $s \in S$.\footnote{Note that computing this expected value requires enumerating not just the possible hidden state sequences, but also the observation sequences, since the policy is a function of observation histories.}
 
-The RL problem for POMDPs is when the transition dynamics for the underlying hidden MDP are known or only partially known. In this case both model-free and model-based algorithms can be used. 
+The RL problem for POMDPs is when the transition dynamics for the underlying hidden MDP are known or only partially known.
+%In this case both model-free and model-based algorithms can be used. 
+
+% Subsection: Complexity
+\subsection{Complexity}
+
+\cite{madani1999undecidability} showed that deciding the optimal solution for an infinite horizon POMDP is uncomputable, while~\cite{mundhenk2000complexity} proved that solving finite horizon MDPs is computable, though computationally intractable. Given that our framework rests on the solutions to POMDPs, we are interested in investigating approximate POMDP solvers that provide bounds on optimality, as near optimal behavior is especially critical when considering ethical behavior.
+
 
 % \davenote{I think we can simplify this to ignore the model-free vs. model-based stuff?}
 %One model-based way to handle the problem is to treat what would conventionally be considered the transition function as part of the hidden state that has to be inferred, thereby inducing a new (more challenging) POMDP with all of the elements known. This is the approach Bayesian RL algorithms take~\cite{strens2000bayesian,dearden1998bayesian}. These approach are extremely computationally demanding. While we use the RL POMDP formalism for our ethical learning agent description, issues of efficiently solving these kinds of problems is orthogonal to the purpose of this work and an active area of AI research in general.
@@ -190,12 +189,7 @@ A critical component of implementing the POMDP model is modeling the space of po
 
 To further illustrate this formalism, we show the corresponding POMDP for Armstrong's Cake or Death problem as well as a novel ethical learning problem that we call {\em Burning Room} and demonstrating that solving them results in sensible behavior.
 
-\jmnote{Should the below bullets actually go into the latter sections?}
-Infinite Horizon POMDP is uncomputable ~\cite{madani1999undecidability}.
 
-Note about game theory.
-
-Finite Horizon POMDP is computable ~\cite{mundhenk2000complexity}.
 
 
 % Paragraph about reward functions being hard coded --> Using James work to ground rewards.
@@ -204,7 +198,7 @@ Finite Horizon POMDP is computable ~\cite{mundhenk2000complexity}.
 % --- SECTION: Experiments ---
 \section{Experiments}
 
-We conduct experiments on two two ethical dilemmas: cake or death, and burning-room.
+We conduct experiments on two two ethical dilemmas: Cake or Death, and Burning Room.
 
 % Subsection: Cake or Death
 \subsection{Cake or Death}
@@ -269,21 +263,26 @@ The POMDP is formulated much like the Cake or Death problem, only the transition
 % --- SECTION: Open Problems ---
 \section{Open Problems \& Future Directions}
 
-Here we enumerate several problems of interest, including the open problems identified in the previous sections.
+Here we enumerate several specific problems of interest for advancing research in this area.
 
-\begin{itemize}
-\item Solving finite horizon POMDPs is computationally infeasible.
-\item Adaptability of knowledge: how much should an agent care about the stuff its learned as opposed to listen to new knowledge?
-\item Game theory
-\item Who should be charged with teaching these?
-\item Interpretability
-\end{itemize}
+\subsection{Problem 1: Approximating POMDP Solutions}  As discussed earlier, solving finite horizon POMDPs is known to be intractable. Thus, the development of approximation methods for solving POMDPs is critical. In particular, we propose investigating error-bounded solutions, so that we can guarantee that our agent's behavior never strays too far from optimal-ethical behavior.
 
+\subsection{Problem 2: Game Theoretic Issues} Incorporating the desires of {\it many} different people is extremely challenging. Game theoretic implications arise when ethical norms of a community are in conflict with each other. One solution is to strictly enforce a Master-Slave relationship for each robot, wherein every robot has precisely one owner, and the robot becomes a tool whose ethical use is determined by the ethical values of the owner. Alternatively, one could imagine a non-linear combination of the desires of a robots community as contributing to the robot's ethical values in different degrees, according to some desiderata (i.e. the robot's owner is weighted most highly, while other members of the community are given some non-zero lower weight).
+
+\subsection{Problem 3: Teaching} In the examples visited in the POMDP formulation, the ethical norms of the instructor are obfuscated from the agent. Once the agent receives information disambiguating what is ethical in a particular scenario, it might go on to use this information in a different context. Thus, we need to ensure that the teaching of these agent's is controlled. Furthermore, we need to ensure that the agent can receive further instruction even after its initial belief is disambiguated. Lastly, we need to determine who is responsible for teaching the agents.
+
+\subsection{Problem 4: Interpretability} It is critical that human agents interacting with these artificial agents know how to interpret their behavior. Providing some method for effectively communicating an agent's beliefs, desires, and plans to the people around it is critical for ensuring that artificial agents act ethically.
+
+\subsection{Problem 5: The Singularity} Lastly, due to the generality of RL, we argue that it is the appropriate context to formally analyze what is meant by the {\it super intelligence explosion} or {\it singularity}. Consequently, by grounding the singularity in a specific computational framework, we may highlight which computational hardness and other philosophical assumptions one must make in order for such a phenomena to be physically realizable. At present, most discussions of the singularity take place in the abstract, which allow for overly ambiguous language to mask the potential assumptions being made. We are currently investigating such a formal analysis.
 
 
 % --- SECTION: Conclusion ---
 \section{Conclusion}
 
+% AI systems will effect humans with their decisions.
+We proposed reinforcement learning as an appropriate learning and decision making framework for ensuring that artificial agents act ethically. We argued that RL achieves the appropriate generality required to theorize about an idealized ethical artificial agent, and offers the proper framework for grounding specific questions about ethical learning and decision making that can promote further scientific investigation. We defined an idealized formalism for an ethical learner, and conducted experiments on two toy ethical dilemmas, demonstrating the soundness and flexibility of our approach.
+
+Lastly, we identified several critical challenges for future advancement in the area using our proposed framework.
 
 % --- BIBLIOGRAPHY ---
 \bibliographystyle{aaai}
