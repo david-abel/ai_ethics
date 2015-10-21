@@ -62,7 +62,7 @@ Research on the interaction between humans and artificial agents is broad; some 
 \subsection{Ruled-Based Systems}
 % Mattias, table: briggs2015sorry
 
-~\cite{briggs2015sorry} discuss scenarios in which a robot ought to infer that a given command leads to undesirable behavior. 
+Briggs and Scheutz~\shortcite{briggs2015sorry} discuss scenarios in which a robot ought to infer that a given command leads to undesirable behavior. The crux of their approach is, given some instructions, the agent first reasons about a set of conditions, termed `felicity conditions'. These include considerations such as ``Do I know {\it how} to accomplish the task?", and ``Does accomplishing this task violate any normative principles?". By reasoning over these conditions, they ensure that an artificial agent will reject certain commands depending on whether or not they violate any of these conditions.  For instance, if the agent can prove that accomplishing the goal is unsafe, the agent will reject the directive to satisfy the goal. While this framework provides a nice architecture for rule-based inference, norms and conditions that are not encoded into the knowledge base of the agent prove difficult to reason about. In particular, the agent's ability to infer which directives should be rejected rests entirely on a set of logical principles provided to the agent. We foresee cases where the set of principles either contradict one another, or fail to generalize to novel encounters. The methodology we will introduce is designed to learn and make decisions optimally in light of uncertainty, removing the requirement that specific ethical norms (and related principles) be provided to the agent as logical desiderata.
 
 
 \subsection{Human-Robot Interaction}
@@ -203,7 +203,7 @@ To further illustrate this formalism, we show the corresponding POMDP for Armstr
 % --- SECTION: Experiments ---
 \section{Experiments}
 
-We conduct experiments on two two ethical dilemmas: Cake or Death, and Burning Room.
+We conduct experiments on two ethical dilemmas targeted at artificially intelligent decision makers: Cake or Death, and Burning Room.
 
 % Subsection: Cake or Death
 \subsection{Cake or Death}
