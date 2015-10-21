@@ -56,13 +56,20 @@ Lastly, we identify critical challenges for future advancement in the area using
 \section{Related Work}
 
 % Overview of related work.
-Research on the interaction between humans and artificial agents is broad; some prior approaches consider particular dilemmas that pose challenges for such interactions, while others investigate the basic mechanisms by which humans ought to interface with artificial agents, such as robots. We provide a brief survey of these existing approaches and how they relate to ethical decision making and learning. We divide the existing literature into three categories: (1) Rule-Based Systems, which are primarily concerned with knowledge representation and logical inference, (2) Human-Robot Interaction, which emphasizes the interfaces and communicative mediums by which humans and robots ought to interact, and (3) Bayesian approaches, that leverage Bayesian inference as a means of enforcing ideal ethical reasoning.
+Research on the interaction between humans and artificial agents is broad. Prior approaches consider particular dilemmas that pose challenges for these and related interactions, while others investigate the basic mechanisms by which humans ought to interface with artificial agents, such as robots and virtual assistants. We provide a brief survey of existing approaches that relate to ethical decision making and learning. We divide the existing literature into three categories: (1) Rule-Based Systems, (2) Human-Robot Interaction and (3) Bayesian approaches.
 
 
 \subsection{Ruled-Based Systems}
 % Mattias, table: briggs2015sorry
 
-Briggs and Scheutz~\shortcite{briggs2015sorry} discuss scenarios in which a robot ought to infer that a given command leads to undesirable behavior. The crux of their approach is, given some instructions, the agent first reasons about a set of conditions, termed `felicity conditions'. These include considerations such as ``Do I know {\it how} to accomplish the task?", and ``Does accomplishing this task violate any normative principles?". By reasoning over these conditions, they ensure that an artificial agent will reject certain commands depending on whether or not they violate any of these conditions.  For instance, if the agent can prove that accomplishing the goal is unsafe, the agent will reject the directive to satisfy the goal. While this framework provides a nice architecture for rule-based inference, norms and conditions that are not encoded into the knowledge base of the agent prove difficult to reason about. In particular, the agent's ability to infer which directives should be rejected rests entirely on a set of logical principles provided to the agent. We foresee cases where the set of principles either contradict one another, or fail to generalize to novel encounters. The methodology we will introduce is designed to learn and make decisions optimally in light of uncertainty, removing the requirement that specific ethical norms (and related principles) be provided to the agent as logical desiderata.
+Briggs and Scheutz~\shortcite{briggs2015sorry} discuss scenarios in which a robot ought to infer that a given command leads to undesirable behavior. The crux of their approach is, given some instructions, the agent first reasons about a set of conditions, termed `felicity conditions'. These include considerations such as ``Do I know {\it how} to accomplish the task?", and ``Does accomplishing this task violate any normative principles?". Each of these conditions is formalized as a logical formula, along with inference rules that enable the agent to infer which directives to reject. For example:
+\begin{equation}
+obl(\alpha,\phi) \wedge \neg per(\alpha, \neg\phi) \rightarrow goal(\alpha, \phi)
+\end{equation}
+
+\noindent Indicates that agent $\alpha$ ought to adopt $\phi$ as a goal if the agent is obligated to do $\phi$ and there is no deontological contradiction in satisfying the goal. By reasoning over these conditions using inference rules of this form, their architecture ensure that an artificial agent will reject certain commands. For instance, if the agent can prove that accomplishing the goal is unsafe, the agent will reject the directive to satisfy the goal.
+
+While this framework provides a nice architecture for rule-based inference, conditions and inference rules that are not encoded into the knowledge base of the agent prove impossible to reason about. In particular, the agent's ability to infer which directives should be rejected rests entirely on a set of logical mechanisms provided to the agent. We foresee cases where the set of principles fail to generalize to novel encounters. The methodology we will introduce is designed to learn and make decisions optimally in light of partial observability, removing the requirement that specific ethical norms (and inference rules) be provided to the agent {\it a priori}. \davenote{It's unclear to me if they want to argue that using NLP grounding they can create new rules, but then it's basically equivalent to hand coding specific rules about what is deontological and what is not... We might need a note about that}
 
 
 \subsection{Human-Robot Interaction}
@@ -136,16 +143,17 @@ In reinforcement learning (RL), the agent is only provided $\mathcal{S}$, $\math
 
 Computational complexity is the metric of usual interest in solving MDPs, as the space required is usually negligible in comparison. Notably,~\cite{papadimitriou1987complexity} proved that computing solutions to stochastic MDPs is P-Complete, demonstrating that optimal solutions to MDPs must be computed sequentially.
 
-Also of interest in RL is the measure of {\it Sample Complexity}, introduced by~\cite{kakade2003sample}. Sample Complexity measures the number of interactions an agent must have with its environment in order to learn to behave well. We can define ``behaving well" using the PAC-MDP (Probability Approximately Correct in Markov Decision Processes) criteria~\shortcite{strehl2009reinforcement}, which imposes sample complexity bounds similar to the Probably Approximately Correct learning framework introduced by~\cite{valiant1984theory}. In particular, an RL algorithm is PAC-MDP, if, with high probability, the algorithm's estimation of the value function $V^\pi(s)$ for all states is within $\epsilon$ of the optimal after a polynomial number of samples (that is, polynomial in the size of the MDP and approximation parameters).
+Also of interest in RL is the measure of {\it Sample Complexity}, introduced by~\cite{kakade2003sample}. Sample Complexity measures the number of interactions an agent must have with its environment in order to learn to behave well. We can define ``behaving well" using the PAC-MDP (Probability Approximately Correct in Markov Decision Processes) criteria~\shortcite{strehl2009reinforcement}, which imposes sample complexity bounds similar to the Probably Approximately Correct learning framework introduced by~\cite{valiant1984theory}. In particular, an RL algorithm is PAC-MDP, if, with high probability, the algorithm's estimation of the value function $V^\pi(s)$ for all states is within $\epsilon$ of the optimal after a polynomial number of samples (that is, polynomial in the size of the MDP and approximation parameters). More formally, there is a polynomial function $p()$, such that after $p(|\mathcal{S}|, |\mathcal{A}|, \frac{1}{\epsilon}, \frac{1}{\delta})$, interactions with the environment:
+\begin{equation}
+\forall_s : |\hat{V}^\pi(s) - V^*(s)| \leq \epsilon
+\end{equation}
 
-There are several known PAC-MDP algorithms for solving MDPs, including Delayed-Q Learning~\shortcite{strehl2006pac}, \textsc{Rmax}~\shortcite{brafman2003r}, and $E^3$~\shortcite{kearns2002near}.
-
-
+There are several known PAC-MDP algorithms for solving MDPs, including Delayed-Q Learning~\shortcite{strehl2006pac}, \textsc{Rmax}~\shortcite{brafman2003r}, and $E^3$~\shortcite{kearns2002near}. Furthermore, an algorithm is {\it efficient PAC-MDP} if we also impose polynomial computational and space complexity constraint on each time step. The existence of such efficient learning algorithms suggests that representing ethical dilemmas as solving an MDP is a reasonable goal to shoot for in terms of achieving real-time, bounded error behavior. However, an MDP makes explicit the assumption that the agent knows the current state of its environment. In the real world, this is never the case, especially when the desires, beliefs, and other cognitive content of agents is a critical component of the decision making process. To accommodate this, we introduce a new model.
 
 % sub subsection: POMDPs // Since we're talking about POMDPs later it might be nice to stick in the background.
 \subsubsection{Partial Observability}
 %\jmnote{I'm going to remove some of the discussions of other agents in this part because I want to avoid someone raising game theory issues here and because right now we're just doing the background of the POMDP. How we plan on using it comes next.}
-An MDP makes explicit the assumption that the agent knows the current state of its environment. In the real world, this is never the case.
+
 %, especially when the beliefs and desires of other agents is taken into consideration. Naturally, information of this form (i.e. ``What is Sam thinking right now?'') is obfuscated from the agent. 
 The partially observable Markov decision process (POMDP), popularized for AI learning by Kaelbling, Littman, and Cassandra~\shortcite{kaelbling1998planning}, allows us to specify explicitly what information about the agent's surroundings 
 % (e.g. the ethical norms of its companions) 
@@ -258,7 +266,7 @@ Therefore, the optimal behavior is sensibly to ask what the ethical utility is a
 
 \begin{figure}
 \centering
-\includegraphics[width=0.33\textwidth]{figures/burning_room.png}
+\includegraphics[width=0.30\textwidth]{figures/burning_room.png}
 \caption{The Burning Room ethical dilemma.}
 \label{fig:burning_room}
 \end{figure}
@@ -283,7 +291,7 @@ Here we enumerate several specific problems of interest for advancing research i
 
 \subsection{Problem 3: Teaching} In the examples visited in the POMDP formulation, the ethical norms of the instructor are obfuscated from the agent. Once the agent receives information disambiguating what is ethical in a particular scenario, it might go on to use this information in a different context. Thus, we need to ensure that the teaching of these agent's is controlled. Furthermore, we need to ensure that the agent can receive further instruction even after its initial belief is disambiguated. Lastly, we need to determine who is responsible for teaching the agents.
 
-\subsection{Problem 4: Interpretability} It is critical that human agents interacting with these artificial agents know how to interpret their behavior. Providing some method for effectively communicating an agent's beliefs, desires, and plans to the people around it is critical for ensuring that artificial agents act ethically.
+\subsection{Problem 4: Interpretability} It is critical that human agents interacting with artificial agents know how to interpret the agents behavior. Providing some method for effectively communicating an agent's beliefs, desires, and plans to the people around it is critical for ensuring that artificial agents act ethically. How this fits into the framework of RL and solving a POMDP is still unclear.
 
 \subsection{Problem 5: The Singularity} Lastly, due to the generality of RL, we argue that it is the appropriate context to formally analyze what is meant by the {\it super intelligence explosion} or {\it singularity}. Consequently, by grounding the singularity in a specific computational framework, we may highlight which computational hardness and other philosophical assumptions one must make in order for such a phenomena to be physically realizable. At present, most discussions of the singularity take place in the abstract, which allow for overly ambiguous language to mask the potential assumptions being made. We are currently investigating such a formal analysis.
 
