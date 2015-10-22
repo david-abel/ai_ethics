@@ -1,15 +1,80 @@
 \begin{thebibliography}{}
 
+\bibitem[\protect\citeauthoryear{Anderson, Anderson, and
+  Armen}{2006}]{anderson2006medethex}
+Anderson, M.; Anderson, S.~L.; and Armen, C.
+\newblock 2006.
+\newblock Medethex: a prototype medical ethics advisor.
+\newblock In {\em Proceedings Of The National Conference On Artificial
+  Intelligence}, volume~21,  1759.
+\newblock Menlo Park, CA; Cambridge, MA; London; AAAI Press; MIT Press; 1999.
+
+\bibitem[\protect\citeauthoryear{Arkoudas, Bringsjord, and
+  Bello}{2005}]{arkoudas2005toward}
+Arkoudas, K.; Bringsjord, S.; and Bello, P.
+\newblock 2005.
+\newblock Toward ethical robots via mechanized deontic logic.
+\newblock In {\em AAAI Fall Symposium on Machine Ethics}.
+
 \bibitem[\protect\citeauthoryear{Armstrong}{2015}]{AAAIW1510183}
 Armstrong, S.
 \newblock 2015.
 \newblock Motivated value selection for artificial agents.
+
+\bibitem[\protect\citeauthoryear{Babes \bgroup et al\mbox.\egroup
+  }{2011}]{babes2011apprenticeship}
+Babes, M.; Marivate, V.; Subramanian, K.; and Littman, M.~L.
+\newblock 2011.
+\newblock Apprenticeship learning about multiple intentions.
+\newblock In {\em Proceedings of the 28th International Conference on Machine
+  Learning (ICML-11)},  897--904.
+
+\bibitem[\protect\citeauthoryear{Beauchamp and
+  Childress}{2001}]{beauchamp2001principles}
+Beauchamp, T., and Childress, J.
+\newblock 2001.
+\newblock {\em Principles of Biomedical Ethics}.
+\newblock Principles of Biomedical Ethics. Oxford University Press.
+
+\bibitem[\protect\citeauthoryear{Brafman and Tennenholtz}{2003}]{brafman2003r}
+Brafman, R.~I., and Tennenholtz, M.
+\newblock 2003.
+\newblock R-max-a general polynomial time algorithm for near-optimal
+  reinforcement learning.
+\newblock {\em The Journal of Machine Learning Research} 3:213--231.
 
 \bibitem[\protect\citeauthoryear{Briggs and Scheutz}{2015}]{briggs2015sorry}
 Briggs, G., and Scheutz, M.
 \newblock 2015.
 \newblock ``sorry, i can't do that'': Developing mechanisms to appropriately
   reject directives in human-robot interactions.
+
+\bibitem[\protect\citeauthoryear{Bringsjord, Arkoudas, and
+  Bello}{2006}]{bringsjord2006toward}
+Bringsjord, S.; Arkoudas, K.; and Bello, P.
+\newblock 2006.
+\newblock Toward a general logicist methodology for engineering ethically
+  correct robots.
+\newblock {\em Intelligent Systems, IEEE} 21(4):38--44.
+
+\bibitem[\protect\citeauthoryear{Clarke}{1975}]{clarke1975logical}
+Clarke, D.
+\newblock 1975.
+\newblock The logical form of imperatives.
+\newblock {\em Philosophia} 5(4):417--427.
+
+\bibitem[\protect\citeauthoryear{Guarini}{2006}]{guarini2006particularism}
+Guarini, M.
+\newblock 2006.
+\newblock Particularism and the classification and reclassification of moral
+  cases.
+\newblock {\em IEEE Intelligent Systems} (4):22--28.
+
+\bibitem[\protect\citeauthoryear{Horty}{2001}]{horty2001agency}
+Horty, J.~F.
+\newblock 2001.
+\newblock {\em Agency and deontic logic}.
+\newblock Oxford University Press Oxford.
 
 \bibitem[\protect\citeauthoryear{Kaelbling, Littman, and
   Cassandra}{1998}]{kaelbling1998planning}
@@ -18,13 +83,44 @@ Kaelbling, L.~P.; Littman, M.~L.; and Cassandra, A.~R.
 \newblock Planning and acting in partially observable stochastic domains.
 \newblock {\em Artificial intelligence} 101(1):99--134.
 
-\bibitem[\protect\citeauthoryear{Littman, Dean, and
-  Kaelbling}{1995}]{Littman1995}
-Littman, M.~L.; Dean, T.~L.; and Kaelbling, L.~P.
-\newblock 1995.
-\newblock On the complexity of solving markov decision problems.
-\newblock In {\em Proceedings of the Eleventh Conference on Uncertainty in
-  Artificial Intelligence}, UAI'95,  394--402.
+\bibitem[\protect\citeauthoryear{Kakade and others}{2003}]{kakade2003sample}
+Kakade, S.~M., et~al.
+\newblock 2003.
+\newblock {\em On the sample complexity of reinforcement learning}.
+\newblock Ph.D. Dissertation, University of London.
+
+\bibitem[\protect\citeauthoryear{Kearns and Singh}{2002}]{kearns2002near}
+Kearns, M., and Singh, S.
+\newblock 2002.
+\newblock Near-optimal reinforcement learning in polynomial time.
+\newblock {\em Machine Learning} 49(2-3):209--232.
+
+\bibitem[\protect\citeauthoryear{Loftin \bgroup et al\mbox.\egroup
+  }{2014}]{loftin2014strategy}
+Loftin, R.; MacGlashan, J.; Peng, B.; Taylor, M.~E.; Littman, M.~L.; Huang, J.;
+  and Roberts, D.~L.
+\newblock 2014.
+\newblock A strategy-aware technique for learning behaviors from discrete human
+  feedback.
+\newblock In {\em Proceedings of the 28th AAAI Conference on Artificial
+  Intelligence (AAAI-2014)}.
+
+\bibitem[\protect\citeauthoryear{MacGlashan and
+  Littman}{2015}]{macglashan2015between}
+MacGlashan, J., and Littman, M.~L.
+\newblock 2015.
+\newblock Between imitation and intention learning.
+\newblock In {\em Proceedings of the 24th International Conference on
+  Artificial Intelligence},  3692--3698.
+\newblock AAAI Press.
+
+\bibitem[\protect\citeauthoryear{MacGlashan \bgroup et al\mbox.\egroup
+  }{2015}]{macglashanGrounding2015}
+MacGlashan, J.; Babe\c{s}-Vroman, M.; desJardins, M.; Littman, M.; Muresan, S.;
+  Squire, S.; Tellex, S.; Arumugam, D.; and Yang, L.
+\newblock 2015.
+\newblock Grounding {E}nglish commands to reward functions.
+\newblock In {\em Robotics: Science and Systems}.
 
 \bibitem[\protect\citeauthoryear{Madani, Hanks, and
   Condon}{1999}]{madani1999undecidability}
@@ -41,11 +137,54 @@ Mundhenk, M.; Goldsmith, J.; Lusena, C.; and Allender, E.
 \newblock Complexity of finite-horizon markov decision process problems.
 \newblock {\em Journal of the ACM (JACM)} 47(4):681--720.
 
+\bibitem[\protect\citeauthoryear{Murakami}{2004}]{murakami2004utilitarian}
+Murakami, Y.
+\newblock 2004.
+\newblock Utilitarian deontic logic.
+\newblock {\em AiML-2004: Advances in Modal Logic}  287.
+
 \bibitem[\protect\citeauthoryear{Papadimitriou and
   Tsitsiklis}{1987}]{papadimitriou1987complexity}
 Papadimitriou, C.~H., and Tsitsiklis, J.~N.
 \newblock 1987.
 \newblock The complexity of markov decision processes.
 \newblock {\em Mathematics of operations research} 12(3):441--450.
+
+\bibitem[\protect\citeauthoryear{Ramachandran and
+  Amir}{2007}]{ramachandran2007bayesian}
+Ramachandran, D., and Amir, E.
+\newblock 2007.
+\newblock Bayesian inverse reinforcement learning.
+\newblock {\em Proceedings of the International Joint Conference on Artiical
+  Intelligence}.
+
+\bibitem[\protect\citeauthoryear{Strehl \bgroup et al\mbox.\egroup
+  }{2006}]{strehl2006pac}
+Strehl, A.~L.; Li, L.; Wiewiora, E.; Langford, J.; and Littman, M.~L.
+\newblock 2006.
+\newblock Pac model-free reinforcement learning.
+\newblock In {\em Proceedings of the 23rd international conference on Machine
+  learning},  881--888.
+\newblock ACM.
+
+\bibitem[\protect\citeauthoryear{Strehl, Li, and
+  Littman}{2009}]{strehl2009reinforcement}
+Strehl, A.~L.; Li, L.; and Littman, M.~L.
+\newblock 2009.
+\newblock Reinforcement learning in finite mdps: Pac analysis.
+\newblock {\em The Journal of Machine Learning Research} 10:2413--2444.
+
+\bibitem[\protect\citeauthoryear{Valiant}{1984}]{valiant1984theory}
+Valiant, L.~G.
+\newblock 1984.
+\newblock A theory of the learnable.
+\newblock {\em Communications of the ACM} 27(11):1134--1142.
+
+\bibitem[\protect\citeauthoryear{Ziebart \bgroup et al\mbox.\egroup
+  }{2008}]{ziebart2008maximum}
+Ziebart, B.~D.; Maas, A.~L.; Bagnell, J.~A.; and Dey, A.~K.
+\newblock 2008.
+\newblock Maximum entropy inverse reinforcement learning.
+\newblock In {\em Proceedings of AAAI},  1433--1438.
 
 \end{thebibliography}
