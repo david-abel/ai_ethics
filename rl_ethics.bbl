@@ -34,7 +34,13 @@ Babes, M.; Marivate, V.; Subramanian, K.; and Littman, M.~L.
 Beauchamp, T., and Childress, J.
 \newblock 2001.
 \newblock {\em Principles of Biomedical Ethics}.
-\newblock Principles of Biomedical Ethics. Oxford University Press.
+\newblock Oxford University Press.
+
+\bibitem[\protect\citeauthoryear{Bostrom}{2014}]{bostrom2014superintelligence}
+Bostrom, N.
+\newblock 2014.
+\newblock {\em Superintelligence: paths, dangers, strategies}.
+\newblock Oxford University Press.
 
 \bibitem[\protect\citeauthoryear{Brafman and Tennenholtz}{2003}]{brafman2003r}
 Brafman, R.~I., and Tennenholtz, M.
@@ -46,8 +52,8 @@ Brafman, R.~I., and Tennenholtz, M.
 \bibitem[\protect\citeauthoryear{Briggs and Scheutz}{2015}]{briggs2015sorry}
 Briggs, G., and Scheutz, M.
 \newblock 2015.
-\newblock ``sorry, i can't do that'': Developing mechanisms to appropriately
-  reject directives in human-robot interactions.
+\newblock ``{S}orry, {I} can't do that'': Developing mechanisms to
+  appropriately reject directives in human-robot interactions.
 
 \bibitem[\protect\citeauthoryear{Bringsjord, Arkoudas, and
   Bello}{2006}]{bringsjord2006toward}
@@ -62,6 +68,13 @@ Clarke, D.
 \newblock 1975.
 \newblock The logical form of imperatives.
 \newblock {\em Philosophia} 5(4):417--427.
+
+\bibitem[\protect\citeauthoryear{Dewey}{2011}]{dewey2011learning}
+Dewey, D.
+\newblock 2011.
+\newblock Learning what to value.
+\newblock In {\em Artificial General Intelligence}. Springer.
+\newblock  309--314.
 
 \bibitem[\protect\citeauthoryear{Guarini}{2006}]{guarini2006particularism}
 Guarini, M.
@@ -81,7 +94,7 @@ Horty, J.~F.
 Kaelbling, L.~P.; Littman, M.~L.; and Cassandra, A.~R.
 \newblock 1998.
 \newblock Planning and acting in partially observable stochastic domains.
-\newblock {\em Artificial intelligence} 101(1):99--134.
+\newblock {\em Artificial Intelligence} 101(1):99--134.
 
 \bibitem[\protect\citeauthoryear{Kakade and others}{2003}]{kakade2003sample}
 Kakade, S.~M., et~al.
@@ -127,14 +140,14 @@ MacGlashan, J.; Babe\c{s}-Vroman, M.; desJardins, M.; Littman, M.; Muresan, S.;
 Madani, O.; Hanks, S.; and Condon, A.
 \newblock 1999.
 \newblock On the undecidability of probabilistic planning and infinite-horizon
-  partially observable markov decision problems.
+  partially observable {M}arkov decision problems.
 \newblock In {\em AAAI/IAAI},  541--548.
 
 \bibitem[\protect\citeauthoryear{Mundhenk \bgroup et al\mbox.\egroup
   }{2000}]{mundhenk2000complexity}
 Mundhenk, M.; Goldsmith, J.; Lusena, C.; and Allender, E.
 \newblock 2000.
-\newblock Complexity of finite-horizon markov decision process problems.
+\newblock Complexity of finite-horizon {M}arkov decision process problems.
 \newblock {\em Journal of the ACM (JACM)} 47(4):681--720.
 
 \bibitem[\protect\citeauthoryear{Murakami}{2004}]{murakami2004utilitarian}
@@ -147,8 +160,8 @@ Murakami, Y.
   Tsitsiklis}{1987}]{papadimitriou1987complexity}
 Papadimitriou, C.~H., and Tsitsiklis, J.~N.
 \newblock 1987.
-\newblock The complexity of markov decision processes.
-\newblock {\em Mathematics of operations research} 12(3):441--450.
+\newblock The complexity of {M}arkov decision processes.
+\newblock {\em Mathematics of Operations Research} 12(3):441--450.
 
 \bibitem[\protect\citeauthoryear{Ramachandran and
   Amir}{2007}]{ramachandran2007bayesian}
@@ -162,16 +175,16 @@ Ramachandran, D., and Amir, E.
   }{2006}]{strehl2006pac}
 Strehl, A.~L.; Li, L.; Wiewiora, E.; Langford, J.; and Littman, M.~L.
 \newblock 2006.
-\newblock Pac model-free reinforcement learning.
-\newblock In {\em Proceedings of the 23rd international conference on Machine
-  learning},  881--888.
+\newblock {PAC} model-free reinforcement learning.
+\newblock In {\em Proceedings of the 23rd International Conference on Machine
+  Learning},  881--888.
 \newblock ACM.
 
 \bibitem[\protect\citeauthoryear{Strehl, Li, and
   Littman}{2009}]{strehl2009reinforcement}
 Strehl, A.~L.; Li, L.; and Littman, M.~L.
 \newblock 2009.
-\newblock Reinforcement learning in finite mdps: Pac analysis.
+\newblock Reinforcement learning in finite {MDP}s: {PAC} analysis.
 \newblock {\em The Journal of Machine Learning Research} 10:2413--2444.
 
 \bibitem[\protect\citeauthoryear{Valiant}{1984}]{valiant1984theory}
