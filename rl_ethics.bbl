@@ -135,6 +135,12 @@ MacGlashan, J.; Babe\c{s}-Vroman, M.; desJardins, M.; Littman, M.; Muresan, S.;
 \newblock Grounding {E}nglish commands to reward functions.
 \newblock In {\em Robotics: Science and Systems}.
 
+\bibitem[\protect\citeauthoryear{MacGlashan}{2015}]{burlap}
+MacGlashan, J.
+\newblock 2015.
+\newblock The {B}rown-{UMBC} reinforcement learning and planning library.
+\newblock http://burlap.cs.brown.edu.
+
 \bibitem[\protect\citeauthoryear{Madani, Hanks, and
   Condon}{1999}]{madani1999undecidability}
 Madani, O.; Hanks, S.; and Condon, A.
